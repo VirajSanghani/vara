@@ -19,56 +19,28 @@
       14.4
     ]
   },
-  "volume_mm3": 9572.713471650357,
-  "surface_area_mm2": 7672.9496958046275,
-  "mass_g": 11.870164704846442,
+  "volume_mm3": 9576.167423719931,
+  "surface_area_mm2": 7672.4011398750035,
+  "mass_g": 11.874447605412715,
   "center_of_mass": [
-    13.124521344853981,
-    2.5533690298507874e-16,
-    3.650428687016021
+    13.120689270302295,
+    8.963247892597671e-16,
+    3.6502470263201157
   ],
   "watertight": true,
-  "solids": 4,
-  "shells": 4,
+  "solids": 2,
+  "shells": 2,
   "faces": 70,
-  "edges": 174,
-  "vertices": 116,
+  "edges": 180,
+  "vertices": 120,
   "min_wall_mm": null,
   "max_overhang_deg": null,
-  "interferences": [
-    {
-      "a": 0,
-      "b": 1,
-      "volume_mm3": null,
-      "note": "bbox-only"
-    },
-    {
-      "a": 0,
-      "b": 2,
-      "volume_mm3": null,
-      "note": "bbox-only"
-    }
-  ],
+  "interferences": [],
   "clearances": [
     {
       "a": 0,
-      "b": 3,
+      "b": 1,
       "min_mm": 1.9999999999999991
-    },
-    {
-      "a": 1,
-      "b": 2,
-      "min_mm": 29.259999999999998
-    },
-    {
-      "a": 1,
-      "b": 3,
-      "min_mm": 2.1999999999999993
-    },
-    {
-      "a": 2,
-      "b": 3,
-      "min_mm": 2.1999999999999993
     }
   ],
   "warnings": [],
@@ -115,6 +87,7 @@
     "finger": true,
     "finger_len": 13.0,
     "finger_thk": 1.1,
+    "finger_root_fillet": 0.6,
     "print_tol": 0.075
   },
   "notes": []

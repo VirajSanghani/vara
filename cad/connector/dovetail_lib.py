@@ -34,6 +34,9 @@ DEFAULTS = dict(
     finger=False,          # [STUDY] dedicated cantilever snap finger?
     finger_len=12.0,       # cantilever length (mm)
     finger_thk=1.2,        # cantilever thickness (mm)
+    finger_root_fillet=0.6,  # PROTECTED functional fillet at the finger root (mm) — see
+                             # dovetail-study §9: real stress concentration the beam model
+                             # understates. Do NOT reduce for packaging.
 )
 
 
@@ -60,60 +63,90 @@ def _rail(yc, p, d, grow=0.0):
     return extrude(sk, amount=p["rail_length"])  # X∈[0, rail_length]
 
 
-def build_dovetail(params=None, part="both"):
-    p = dict(DEFAULTS)
-    if params:
-        p.update(params)
-    d = derived(p)
+# ─── Reusable primitives — the single source of truth consumed by BOTH the standalone
+#     connector AND the Phase-3 host bodies (core socket, cartridge rails). ───
+
+def male_rails(params=None):
+    """Male rails (both, with seating dimples) in the connector frame, X∈[0,rail_length].
+    No backing plate — the host (cartridge body) provides backing."""
+    p = dict(DEFAULTS); p.update(params or {}); d = derived(p)
     h = p["engage_depth"]
-    L = p["rail_length"]
-    c = p["flank_clearance"]
+    rails = _rail(+p["rail_offset"], p, d) + _rail(-p["rail_offset"], p, d)
+    for s in (+1, -1):
+        dimple_y = s * p["rail_offset"] + s * (d["mouth_half"] - p["detent_depth"] / 2)
+        rails = rails - (Pos(p["detent_pos"], dimple_y, h - 0.8)
+                         * Box(p["detent_w"] + 0.2, p["detent_depth"] + 0.4, 1.4))
+    return rails
+
+
+def socket_cut(params=None):
+    """Everything to SUBTRACT from a host body to form the female socket: the grown-male
+    groove + (if finger) the finger-freeing slots WITH the protected root fillet."""
+    p = dict(DEFAULTS); p.update(params or {}); d = derived(p)
+    h, c, off = p["engage_depth"], p["flank_clearance"], p["rail_offset"]
+    cut = _rail(+off, p, d, grow=c) + _rail(-off, p, d, grow=c)
+    cut = cut + (Pos(0, 0, -c) * cut)  # clearance under the floor
+    if p["finger"]:
+        fz_lo, fz_hi = -p["wall_thk"], h
+        for s in (+1, -1):
+            slot_y = s * off + s * (d["floor_half"] + c + p["wall_thk"] / 2 + 0.01)
+            slot = Pos(p["detent_pos"], slot_y, (fz_lo + fz_hi) / 2) \
+                * Box(p["finger_len"], 0.8, fz_hi - fz_lo + 0.2)
+            # PROTECTED finger-root fillet: round the slot's vertical (Z) ends so the
+            # finger meets the body on a radius, not a sharp stress riser.
+            if p["finger_root_fillet"] > 0:
+                try:
+                    ends = slot.edges().filter_by(Axis.Z).group_by(Axis.X)
+                    slot = fillet(ends[0] + ends[-1], p["finger_root_fillet"])
+                except Exception:
+                    pass
+            cut = cut + slot
+    return cut
+
+
+def detent_add(params=None):
+    """Detent bumps (both rails) to ADD to a host body after the socket is cut."""
+    p = dict(DEFAULTS); p.update(params or {}); d = derived(p)
+    h, c, off = p["engage_depth"], p["flank_clearance"], p["rail_offset"]
+    bumps = None
+    # bump protrudes detent_depth into the groove AND embeds 0.4 mm into the finger face
+    # (so it unions solidly with the finger root — not a floating box).
+    embed = 0.4
+    bw = p["detent_depth"] + embed
+    for s in (+1, -1):
+        face = s * (off + d["mouth_half"] + c)              # finger inner face (groove edge)
+        bump_y = face - s * (bw / 2 - embed)                 # center, embedded into finger
+        b = Pos(p["detent_pos"], bump_y, h - 0.8) * Box(p["detent_w"], bw, 1.2)
+        bumps = b if bumps is None else bumps + b
+    return bumps
+
+
+def build_dovetail(params=None, part="both"):
+    p = dict(DEFAULTS); p.update(params or {}); d = derived(p)
+    h, L = p["engage_depth"], p["rail_length"]
     off = p["rail_offset"]
 
-    # ---- MALE (cartridge side): two rails + backing plate ----
-    male = _rail(+off, p, d) + _rail(-off, p, d)
-    plate_w = 2 * (off + d["floor_half"]) + 0.0
-    plate = Pos(L / 2, 0, h + p["plate_thk"] / 2) * Box(L, plate_w, p["plate_thk"])
-    male = male + plate
-    # lead-in chamfer at the +X mouth end (top outer edges of rails)
+    # ---- MALE: rails (+ dimples) + backing plate, lead-in chamfer ----
+    male = male_rails(p)
+    plate_w = 2 * (off + d["floor_half"])
+    male = male + Pos(L / 2, 0, h + p["plate_thk"] / 2) * Box(L, plate_w, p["plate_thk"])
     if p["lead_in_chamfer"] > 0:
         try:
-            mouth_edges = male.edges().filter_by(Axis.Y).group_by(Axis.X)[-1]
-            male = chamfer(mouth_edges, p["lead_in_chamfer"])
+            male = chamfer(male.edges().filter_by(Axis.Y).group_by(Axis.X)[-1],
+                           p["lead_in_chamfer"])
         except Exception:
-            pass  # chamfer is cosmetic for the study; never fail the build on it
+            pass
 
-    # ---- FEMALE (core side): block − grown male grooves (− finger slot) + detent bump ----
+    # ---- FEMALE: block − socket_cut + detent bumps (composed from the same primitives) ----
     fy = 2 * (off + d["floor_half"]) + 2 * p["wall_thk"]
     fz_lo, fz_hi = -p["wall_thk"], h
     female = Pos(L / 2, 0, (fz_lo + fz_hi) / 2) * Box(L + 2 * p["wall_thk"], fy, fz_hi - fz_lo)
-    groove = _rail(+off, p, d, grow=c) + _rail(-off, p, d, grow=c)
-    groove = groove + (Pos(0, 0, -c) * groove)  # extend down by clearance under the floor
-    female = female - groove
-
-    # Detent is SYMMETRIC — one per rail (doubles retention, balances load).
-    # Gen2+ frees a dedicated cantilever finger; Gen1 flexes the solid lip wall.
-    for s in (+1, -1):
-        yc = s * off
-        if p["finger"]:  # slot frees a tongue on the outer wall of this rail
-            slot_y = yc + s * (d["floor_half"] + c + p["wall_thk"] / 2 + 0.01)
-            slot = Pos(p["detent_pos"], slot_y, (fz_lo + fz_hi) / 2) \
-                * Box(p["finger_len"], 0.8, fz_hi - fz_lo + 0.2)
-            female = female - slot
-        # bump protrudes into the groove by detent_depth at X=detent_pos
-        bump_y = yc + s * (d["mouth_half"] + c - p["detent_depth"] / 2)
-        female = female + Pos(p["detent_pos"], bump_y, h - 0.8) \
-            * Box(p["detent_w"], p["detent_depth"], 1.2)
-        # matching dimple on the male so it seats captive at the detent
-        dimple_y = yc + s * (d["mouth_half"] - p["detent_depth"] / 2)
-        male = male - (Pos(p["detent_pos"], dimple_y, h - 0.8)
-                       * Box(p["detent_w"] + 0.2, p["detent_depth"] + 0.4, 1.4))
+    female = female - socket_cut(p) + detent_add(p)
 
     if part == "male":
         return male
     if part == "female":
         return female
-    # assembled view for GLB/preview: female in place, male lifted +Z for legibility
     return Compound(children=[female, Pos(0, 0, 6.0) * male])
 
 

@@ -1,0 +1,66 @@
+{
+  "name": "vision_cartridge",
+  "ok": true,
+  "shape_kind": "Solid",
+  "bbox": {
+    "min": [
+      0.0,
+      -17.80083015283884,
+      -7.393399555806929e-16
+    ],
+    "max": [
+      26.0,
+      17.80083015283884,
+      19.0
+    ],
+    "size": [
+      26.0,
+      35.60166030567768,
+      19.0
+    ]
+  },
+  "volume_mm3": 4759.975142115118,
+  "surface_area_mm2": 4039.4117967729017,
+  "mass_g": 5.902369176222746,
+  "center_of_mass": [
+    13.162446146225134,
+    -1.6047004829581834e-15,
+    5.498947997328247
+  ],
+  "watertight": true,
+  "solids": 1,
+  "shells": 3,
+  "faces": 59,
+  "edges": 138,
+  "vertices": 92,
+  "min_wall_mm": null,
+  "max_overhang_deg": null,
+  "interferences": [],
+  "clearances": [],
+  "warnings": [],
+  "errors": [],
+  "requirement_results": [
+    {
+      "name": "_valid",
+      "ok": true
+    },
+    {
+      "name": "_opt_path_clear",
+      "ok": true
+    },
+    {
+      "name": "_pads_exposed",
+      "ok": true
+    },
+    {
+      "name": "_envelope",
+      "ok": true
+    },
+    {
+      "name": "_rails_fused",
+      "ok": true
+    }
+  ],
+  "params": {},
+  "notes": []
+}

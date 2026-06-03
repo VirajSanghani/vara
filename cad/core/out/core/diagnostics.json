@@ -1,0 +1,66 @@
+{
+  "name": "core_body",
+  "ok": true,
+  "shape_kind": "Solid",
+  "bbox": {
+    "min": [
+      -9.0,
+      -44.0,
+      -16.0
+    ],
+    "max": [
+      35.0,
+      20.0,
+      4.0
+    ],
+    "size": [
+      44.0,
+      64.0,
+      20.0
+    ]
+  },
+  "volume_mm3": 17649.41928723734,
+  "surface_area_mm2": 15746.373481502695,
+  "mass_g": 21.8852799161743,
+  "center_of_mass": [
+    12.853773297231358,
+    -15.000717318901964,
+    -5.585997485126934
+  ],
+  "watertight": true,
+  "solids": 1,
+  "shells": 1,
+  "faces": 113,
+  "edges": 327,
+  "vertices": 218,
+  "min_wall_mm": null,
+  "max_overhang_deg": null,
+  "interferences": [],
+  "clearances": [],
+  "warnings": [],
+  "errors": [],
+  "requirement_results": [
+    {
+      "name": "_watertight",
+      "ok": true
+    },
+    {
+      "name": "_opt_clear",
+      "ok": true
+    },
+    {
+      "name": "_pads_clear",
+      "ok": true
+    },
+    {
+      "name": "_socket_present",
+      "ok": true
+    },
+    {
+      "name": "_finger_root_fillet",
+      "ok": true
+    }
+  ],
+  "params": {},
+  "notes": []
+}
