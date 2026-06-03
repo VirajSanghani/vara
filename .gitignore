@@ -1,6 +1,7 @@
 # secrets — never commit (Plan honesty rule, Risk table)
 .env
 .env.*
+!.env.example
 *.key
 secrets/
 
@@ -22,3 +23,6 @@ venv/
 anim/_scratch/
 web/node_modules/
 web/dist/
+
+# Phase 5 prototype demo scratch (regenerate: python3 -m app.demo)
+app/_out/

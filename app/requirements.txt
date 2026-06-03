@@ -1,0 +1,14 @@
+# VARA prototype dependencies.
+#
+# Off-Pi (logic demo `python3 -m app.demo`) needs only:
+pillow>=10.0          # display-layout rendering (real + stub)
+anthropic>=0.40       # cloud vision client (real path; demo uses stubs)
+
+# On the Raspberry Pi Zero 2 W (real hardware path) ALSO install:
+#   picamera2          # CSI camera (usually preinstalled on Raspberry Pi OS)
+#   st7789             # 1.69" ST7789 240x280 SPI display driver
+#   gpiozero           # EC11 jog encoder + push
+#   smbus2             # I2C EEPROM (cartridge ID @0x50)
+# plus the system package: espeak-ng   (TTS via the I2S amp)
+#
+# Any missing Pi lib → that subsystem falls back to its STUB (logged at startup).
