@@ -1,0 +1,2824 @@
+(export
+	(version "E")
+	(design
+		(source "/Users/vs/Projects/vara/electronics/vara_core.kicad_sch")
+		(date "2026-06-03T19:25:19")
+		(tool "Eeschema 10.0.3")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title "VARA Core")
+				(company)
+				(rev)
+				(date "2026-06-03")
+				(source "vara_core.kicad_sch")
+				(comment
+					(number "1")
+					(value "VARA — DESIGN ONLY, not verified")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "A1")
+			(value "RPi Zero 2 W")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "A1")
+				(description "Compute module (40-pin header + CSI)")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "13f18180-43cb-45f6-a696-7933dd840e31")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "6")
+						)
+						(pin
+							(num "9")
+						)
+						(pin
+							(num "19")
+						)
+						(pin
+							(num "23")
+						)
+						(pin
+							(num "24")
+						)
+						(pin
+							(num "22")
+						)
+						(pin
+							(num "18")
+						)
+						(pin
+							(num "33")
+						)
+						(pin
+							(num "12")
+						)
+						(pin
+							(num "35")
+						)
+						(pin
+							(num "38")
+						)
+						(pin
+							(num "40")
+						)
+						(pin
+							(num "29")
+						)
+						(pin
+							(num "31")
+						)
+						(pin
+							(num "36")
+						)
+						(pin
+							(num "37")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "16")
+						)
+						(pin
+							(num "32")
+						)
+						(pin
+							(num "CSI")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "BT1")
+			(value "Li-po 3.7V 1500mAh")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "BT1")
+				(description "Battery")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "09c6efc9-d44f-435b-a862-f52eb17192d5")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "+")
+						)
+						(pin
+							(num "-")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "CAM1")
+			(value "RPi Camera v2")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "CAM1")
+				(description "Fixed camera, looks out optical bore")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "25d690b3-c075-4e3e-8668-4b7eb13b04ae")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "CSI")
+						)
+						(pin
+							(num "GND")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "DS1")
+			(value "ST7789 1.69in 240x280")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "DS1")
+				(description "SPI IPS display")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e2a342a5-0b1a-403a-a9ea-55828db30baa")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "VCC")
+						)
+						(pin
+							(num "GND")
+						)
+						(pin
+							(num "SCL")
+						)
+						(pin
+							(num "SDA")
+						)
+						(pin
+							(num "RES")
+						)
+						(pin
+							(num "DC")
+						)
+						(pin
+							(num "CS")
+						)
+						(pin
+							(num "BLK")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J1")
+			(value "USB-C recept")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "J1")
+				(description "Charge in")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "d7dd7a65-feae-49a5-85ba-6a1119132dec")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "VBUS")
+						)
+						(pin
+							(num "GND")
+						)
+						(pin
+							(num "CC1")
+						)
+						(pin
+							(num "CC2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J2")
+			(value "Pogo 6p (CORE)")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "J2")
+				(description "Cartridge interface — connector-spec v0.2")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "009c6cd7-af96-4c61-bad3-42954eab5dd0")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "J3")
+			(value "CSI FFC 15p")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "J3")
+				(description "Camera ribbon (CSI-2 bus, not pogo)")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c55873a1-4f9d-479a-89c4-6aaf875f9717")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "CSI")
+						)
+						(pin
+							(num "GND")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "LS1")
+			(value "Speaker 8R 1W")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "LS1")
+				(description "Speaker")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c9cf51f5-4d45-4705-9632-aad4668b9110")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "+")
+						)
+						(pin
+							(num "-")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "MK1")
+			(value "SPH0645LM4H")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "MK1")
+				(description "I2S MEMS mic")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "1dffa6cc-a09c-4d72-bc62-86290d7f69df")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "3V3")
+						)
+						(pin
+							(num "GND")
+						)
+						(pin
+							(num "BCLK")
+						)
+						(pin
+							(num "LRCL")
+						)
+						(pin
+							(num "DOUT")
+						)
+						(pin
+							(num "SEL")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R1")
+			(value "4.7k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R1")
+				(description "I2C SDA pull-up")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c5ef5834-a0c0-4b94-82a0-77a4b801ae79")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R2")
+			(value "4.7k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R2")
+				(description "I2C SCL pull-up")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "827e9008-bd38-451d-95a0-b4a53280774a")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R3")
+			(value "10k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R3")
+				(description "CD# pull-up")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "40c52b4a-a256-4b6b-940a-b3dd402a7322")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R4")
+			(value "10k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R4")
+				(description "INT pull-up")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "324ecf5d-a6f1-46d2-bb7a-7d75351d19df")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R5")
+			(value "100k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R5")
+				(description "U5 EN pull-down")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "52c9cfc0-2752-47ae-94b5-dd58d12a1897")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R7")
+			(value "5.1k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R7")
+				(description "USB CC1")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "c94a6218-2ddf-4c10-9dbf-d945cb50aa6b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R8")
+			(value "5.1k")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R8")
+				(description "USB CC2")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "637303a4-9d43-44b5-b0f3-d7c48b1b3687")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "SW1")
+			(value "EC11")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "SW1")
+				(description "Rotary encoder + push")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "93c2d26a-00ec-4bfb-bee0-1915df2e7acf")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "A")
+						)
+						(pin
+							(num "B")
+						)
+						(pin
+							(num "C")
+						)
+						(pin
+							(num "SW")
+						)
+						(pin
+							(num "SC")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U2")
+			(value "IP5306")
+			(footprint "Package_SO:ESOP-8")
+			(fields
+				(field
+					(name "Footprint") "Package_SO:ESOP-8")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "U2")
+				(description "PMIC: charge+boost+path+button")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "fdda24ad-1a9d-42b6-b8b0-6fce570b4653")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "VIN")
+						)
+						(pin
+							(num "BAT")
+						)
+						(pin
+							(num "VOUT")
+						)
+						(pin
+							(num "GND")
+						)
+						(pin
+							(num "KEY")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U4")
+			(value "MAX98357A")
+			(footprint "Package_DFN_QFN:QFN-16")
+			(fields
+				(field
+					(name "Footprint") "Package_DFN_QFN:QFN-16")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "U4")
+				(description "I2S Class-D amp")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "69f72bbd-b993-44ac-b54d-c3b852ba12ea")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "VIN")
+						)
+						(pin
+							(num "GND")
+						)
+						(pin
+							(num "BCLK")
+						)
+						(pin
+							(num "LRC")
+						)
+						(pin
+							(num "DIN")
+						)
+						(pin
+							(num "GAIN")
+						)
+						(pin
+							(num "SD")
+						)
+						(pin
+							(num "OUTP")
+						)
+						(pin
+							(num "OUTN")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U5")
+			(value "TPS22918")
+			(footprint "Package_TO_SOT_SMD:SOT-23-6")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "U5")
+				(description "Load switch (V+ to cartridge)")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "6fd69ca0-e39d-4f36-9a70-bec2d9fd9614")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U6")
+			(value "AP2112K-3.3")
+			(footprint "Package_TO_SOT_SMD:SOT-23-5")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "U6")
+				(description "3V3 LDO 600mA")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_core.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "705869c1-8089-4fbe-ac60-933c3d41c652")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "5")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "VARA")
+			(part "A1")
+			(description "Compute module (40-pin header + CSI)")
+			(fields
+				(field
+					(name "Reference") "A")
+				(field
+					(name "Value") "RPi Zero 2 W")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Compute module (40-pin header + CSI)")
+			)
+			(pins
+				(pin
+					(num "2")
+					(name "5V")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "GPIO2_SDA1")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "5V")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "GPIO3_SCL1")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "9")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "12")
+					(name "GPIO18_BCLK")
+					(type "passive")
+				)
+				(pin
+					(num "16")
+					(name "GPIO23")
+					(type "passive")
+				)
+				(pin
+					(num "18")
+					(name "GPIO24")
+					(type "passive")
+				)
+				(pin
+					(num "19")
+					(name "GPIO10_MOSI")
+					(type "passive")
+				)
+				(pin
+					(num "22")
+					(name "GPIO25")
+					(type "passive")
+				)
+				(pin
+					(num "23")
+					(name "GPIO11_SCLK")
+					(type "passive")
+				)
+				(pin
+					(num "24")
+					(name "GPIO8_CE0")
+					(type "passive")
+				)
+				(pin
+					(num "29")
+					(name "GPIO5")
+					(type "passive")
+				)
+				(pin
+					(num "31")
+					(name "GPIO6")
+					(type "passive")
+				)
+				(pin
+					(num "32")
+					(name "GPIO12")
+					(type "passive")
+				)
+				(pin
+					(num "33")
+					(name "GPIO13_PWM1")
+					(type "passive")
+				)
+				(pin
+					(num "35")
+					(name "GPIO19_LRCLK")
+					(type "passive")
+				)
+				(pin
+					(num "36")
+					(name "GPIO16")
+					(type "passive")
+				)
+				(pin
+					(num "37")
+					(name "GPIO26")
+					(type "passive")
+				)
+				(pin
+					(num "38")
+					(name "GPIO20_PCMDIN")
+					(type "passive")
+				)
+				(pin
+					(num "40")
+					(name "GPIO21_PCMDOUT")
+					(type "passive")
+				)
+				(pin
+					(num "CSI")
+					(name "CAM_CSI")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "BT1")
+			(description "Battery")
+			(fields
+				(field
+					(name "Reference") "B")
+				(field
+					(name "Value") "Li-po 3.7V 1500mAh")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Battery")
+			)
+			(pins
+				(pin
+					(num "+")
+					(name "+")
+					(type "passive")
+				)
+				(pin
+					(num "-")
+					(name "-")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "CAM1")
+			(description "Fixed camera, looks out optical bore")
+			(fields
+				(field
+					(name "Reference") "C")
+				(field
+					(name "Value") "RPi Camera v2")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Fixed camera, looks out optical bore")
+			)
+			(pins
+				(pin
+					(num "CSI")
+					(name "CSI_BUS")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "DS1")
+			(description "SPI IPS display")
+			(fields
+				(field
+					(name "Reference") "D")
+				(field
+					(name "Value") "ST7789 1.69in 240x280")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "SPI IPS display")
+			)
+			(pins
+				(pin
+					(num "BLK")
+					(name "BLK")
+					(type "passive")
+				)
+				(pin
+					(num "CS")
+					(name "CS")
+					(type "passive")
+				)
+				(pin
+					(num "DC")
+					(name "DC")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "RES")
+					(name "RES")
+					(type "passive")
+				)
+				(pin
+					(num "SCL")
+					(name "SCL")
+					(type "passive")
+				)
+				(pin
+					(num "SDA")
+					(name "SDA")
+					(type "passive")
+				)
+				(pin
+					(num "VCC")
+					(name "VCC")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "J1")
+			(description "Charge in")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "USB-C recept")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Charge in")
+			)
+			(pins
+				(pin
+					(num "CC1")
+					(name "CC1")
+					(type "passive")
+				)
+				(pin
+					(num "CC2")
+					(name "CC2")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "VBUS")
+					(name "VBUS")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "J2")
+			(description "Cartridge interface — connector-spec v0.2")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "Pogo 6p (CORE)")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Cartridge interface — connector-spec v0.2")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "V+")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "SDA")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "SCL")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "CD#")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "INT")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "J3")
+			(description "Camera ribbon (CSI-2 bus, not pogo)")
+			(fields
+				(field
+					(name "Reference") "J")
+				(field
+					(name "Value") "CSI FFC 15p")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Camera ribbon (CSI-2 bus, not pogo)")
+			)
+			(pins
+				(pin
+					(num "CSI")
+					(name "CSI_BUS")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "LS1")
+			(description "Speaker")
+			(fields
+				(field
+					(name "Reference") "L")
+				(field
+					(name "Value") "Speaker 8R 1W")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Speaker")
+			)
+			(pins
+				(pin
+					(num "+")
+					(name "+")
+					(type "passive")
+				)
+				(pin
+					(num "-")
+					(name "-")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "MK1")
+			(description "I2S MEMS mic")
+			(fields
+				(field
+					(name "Reference") "M")
+				(field
+					(name "Value") "SPH0645LM4H")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "I2S MEMS mic")
+			)
+			(pins
+				(pin
+					(num "3V3")
+					(name "3V3")
+					(type "passive")
+				)
+				(pin
+					(num "BCLK")
+					(name "BCLK")
+					(type "passive")
+				)
+				(pin
+					(num "DOUT")
+					(name "DOUT")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "LRCL")
+					(name "LRCL")
+					(type "passive")
+				)
+				(pin
+					(num "SEL")
+					(name "SEL")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R1")
+			(description "I2C SDA pull-up")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "4.7k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "I2C SDA pull-up")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R2")
+			(description "I2C SCL pull-up")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "4.7k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "I2C SCL pull-up")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R3")
+			(description "CD# pull-up")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "10k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "CD# pull-up")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R4")
+			(description "INT pull-up")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "10k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "INT pull-up")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R5")
+			(description "U5 EN pull-down")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "100k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "U5 EN pull-down")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R7")
+			(description "USB CC1")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "5.1k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "USB CC1")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R8")
+			(description "USB CC2")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "5.1k")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "USB CC2")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "SW1")
+			(description "Rotary encoder + push")
+			(fields
+				(field
+					(name "Reference") "S")
+				(field
+					(name "Value") "EC11")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Rotary encoder + push")
+			)
+			(pins
+				(pin
+					(num "A")
+					(name "A")
+					(type "passive")
+				)
+				(pin
+					(num "B")
+					(name "B")
+					(type "passive")
+				)
+				(pin
+					(num "C")
+					(name "COM")
+					(type "passive")
+				)
+				(pin
+					(num "SC")
+					(name "SW_COM")
+					(type "passive")
+				)
+				(pin
+					(num "SW")
+					(name "SW")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "U2")
+			(description "PMIC: charge+boost+path+button")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "IP5306")
+				(field
+					(name "Footprint") "Package_SO:ESOP-8")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "PMIC: charge+boost+path+button")
+			)
+			(pins
+				(pin
+					(num "BAT")
+					(name "BAT")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "KEY")
+					(name "KEY")
+					(type "passive")
+				)
+				(pin
+					(num "VIN")
+					(name "VIN")
+					(type "passive")
+				)
+				(pin
+					(num "VOUT")
+					(name "VOUT_5V")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "U4")
+			(description "I2S Class-D amp")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "MAX98357A")
+				(field
+					(name "Footprint") "Package_DFN_QFN:QFN-16")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "I2S Class-D amp")
+			)
+			(pins
+				(pin
+					(num "BCLK")
+					(name "BCLK")
+					(type "passive")
+				)
+				(pin
+					(num "DIN")
+					(name "DIN")
+					(type "passive")
+				)
+				(pin
+					(num "GAIN")
+					(name "GAIN")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "LRC")
+					(name "LRC")
+					(type "passive")
+				)
+				(pin
+					(num "OUTN")
+					(name "OUT-")
+					(type "passive")
+				)
+				(pin
+					(num "OUTP")
+					(name "OUT+")
+					(type "passive")
+				)
+				(pin
+					(num "SD")
+					(name "SD")
+					(type "passive")
+				)
+				(pin
+					(num "VIN")
+					(name "VIN")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "U5")
+			(description "Load switch (V+ to cartridge)")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "TPS22918")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Load switch (V+ to cartridge)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VIN")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "ON")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "VOUT")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "U6")
+			(description "3V3 LDO 600mA")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "AP2112K-3.3")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-5")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "3V3 LDO 600mA")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "VIN")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "EN")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "VOUT")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries)
+	(nets
+		(net
+			(code "1")
+			(name "+3V3_SYS")
+			(class "Default")
+			(node
+				(ref "DS1")
+				(pin "VCC")
+				(pinfunction "VCC_VCC")
+				(pintype "passive")
+			)
+			(node
+				(ref "MK1")
+				(pin "3V3")
+				(pinfunction "3V3_3V3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R3")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "SD")
+				(pinfunction "SD_SD")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "1")
+				(pinfunction "VIN_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U6")
+				(pin "5")
+				(pinfunction "VOUT_5")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "2")
+			(name "+5V")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "2")
+				(pinfunction "5V_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "4")
+				(pinfunction "5V_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "VOUT")
+				(pinfunction "VOUT_5V_VOUT")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "VIN")
+				(pinfunction "VIN_VIN")
+				(pintype "passive")
+			)
+			(node
+				(ref "U6")
+				(pin "1")
+				(pinfunction "VIN_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U6")
+				(pin "3")
+				(pinfunction "EN_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "+VBUS")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "VBUS")
+				(pinfunction "VBUS_VBUS")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "VIN")
+				(pinfunction "VIN_VIN")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "4")
+			(name "CART_CD")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "16")
+				(pinfunction "GPIO23_16")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "5")
+				(pinfunction "CD#_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "R3")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "5")
+			(name "CART_INT")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "32")
+				(pinfunction "GPIO12_32")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "6")
+				(pinfunction "INT_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "R4")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "6")
+			(name "CART_VEN")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "37")
+				(pinfunction "GPIO26_37")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "3")
+				(pinfunction "ON_3")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "7")
+			(name "CSI")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "CSI")
+				(pinfunction "CAM_CSI_CSI")
+				(pintype "passive")
+			)
+			(node
+				(ref "CAM1")
+				(pin "CSI")
+				(pinfunction "CSI_BUS_CSI")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "CSI")
+				(pinfunction "CSI_BUS_CSI")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "8")
+			(name "DISP_BLK")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "33")
+				(pinfunction "GPIO13_PWM1_33")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "BLK")
+				(pinfunction "BLK_BLK")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "9")
+			(name "DISP_CS")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "24")
+				(pinfunction "GPIO8_CE0_24")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "CS")
+				(pinfunction "CS_CS")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "10")
+			(name "DISP_DC")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "22")
+				(pinfunction "GPIO25_22")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "DC")
+				(pinfunction "DC_DC")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "11")
+			(name "DISP_RST")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "18")
+				(pinfunction "GPIO24_18")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "RES")
+				(pinfunction "RES_RES")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "12")
+			(name "ENC_A")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "29")
+				(pinfunction "GPIO5_29")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "A")
+				(pinfunction "A_A")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "13")
+			(name "ENC_B")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "31")
+				(pinfunction "GPIO6_31")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "B")
+				(pinfunction "B_B")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "14")
+			(name "ENC_SW")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "36")
+				(pinfunction "GPIO16_36")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "SW")
+				(pinfunction "SW_SW")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "KEY")
+				(pinfunction "KEY_KEY")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "15")
+			(name "GND")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "6")
+				(pinfunction "GND_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "A1")
+				(pin "9")
+				(pinfunction "GND_9")
+				(pintype "passive")
+			)
+			(node
+				(ref "BT1")
+				(pin "-")
+				(pinfunction "-_-")
+				(pintype "passive")
+			)
+			(node
+				(ref "CAM1")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "J1")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "J3")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "MK1")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "MK1")
+				(pin "SEL")
+				(pinfunction "SEL_SEL")
+				(pintype "passive")
+			)
+			(node
+				(ref "R5")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R7")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R8")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "C")
+				(pinfunction "COM_C")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW1")
+				(pin "SC")
+				(pinfunction "SW_COM_SC")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "GAIN")
+				(pinfunction "GAIN_GAIN")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U6")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "16")
+			(name "I2C_SCL")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "5")
+				(pinfunction "GPIO3_SCL1_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "4")
+				(pinfunction "SCL_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "R2")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "17")
+			(name "I2C_SDA")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "3")
+				(pinfunction "GPIO2_SDA1_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "J2")
+				(pin "3")
+				(pinfunction "SDA_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "R1")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "18")
+			(name "I2S_BCLK")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "12")
+				(pinfunction "GPIO18_BCLK_12")
+				(pintype "passive")
+			)
+			(node
+				(ref "MK1")
+				(pin "BCLK")
+				(pinfunction "BCLK_BCLK")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "BCLK")
+				(pinfunction "BCLK_BCLK")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "19")
+			(name "I2S_DIN")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "38")
+				(pinfunction "GPIO20_PCMDIN_38")
+				(pintype "passive")
+			)
+			(node
+				(ref "MK1")
+				(pin "DOUT")
+				(pinfunction "DOUT_DOUT")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "20")
+			(name "I2S_DOUT")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "40")
+				(pinfunction "GPIO21_PCMDOUT_40")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "DIN")
+				(pinfunction "DIN_DIN")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "21")
+			(name "I2S_LRCLK")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "35")
+				(pinfunction "GPIO19_LRCLK_35")
+				(pintype "passive")
+			)
+			(node
+				(ref "MK1")
+				(pin "LRCL")
+				(pinfunction "LRCL_LRCL")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "LRC")
+				(pinfunction "LRC_LRC")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "22")
+			(name "SPI_MOSI")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "19")
+				(pinfunction "GPIO10_MOSI_19")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "SDA")
+				(pinfunction "SDA_SDA")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "23")
+			(name "SPI_SCLK")
+			(class "Default")
+			(node
+				(ref "A1")
+				(pin "23")
+				(pinfunction "GPIO11_SCLK_23")
+				(pintype "passive")
+			)
+			(node
+				(ref "DS1")
+				(pin "SCL")
+				(pinfunction "SCL_SCL")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "24")
+			(name "SPK_N")
+			(class "Default")
+			(node
+				(ref "LS1")
+				(pin "-")
+				(pinfunction "-_-")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "OUTN")
+				(pinfunction "OUT-_OUTN")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "25")
+			(name "SPK_P")
+			(class "Default")
+			(node
+				(ref "LS1")
+				(pin "+")
+				(pinfunction "+_+")
+				(pintype "passive")
+			)
+			(node
+				(ref "U4")
+				(pin "OUTP")
+				(pinfunction "OUT+_OUTP")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "26")
+			(name "USB_CC1")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "CC1")
+				(pinfunction "CC1_CC1")
+				(pintype "passive")
+			)
+			(node
+				(ref "R7")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "27")
+			(name "USB_CC2")
+			(class "Default")
+			(node
+				(ref "J1")
+				(pin "CC2")
+				(pinfunction "CC2_CC2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R8")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "28")
+			(name "V+_SW")
+			(class "Default")
+			(node
+				(ref "J2")
+				(pin "1")
+				(pinfunction "V+_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U5")
+				(pin "4")
+				(pinfunction "VOUT_4")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "29")
+			(name "VBAT")
+			(class "Default")
+			(node
+				(ref "BT1")
+				(pin "+")
+				(pinfunction "+_+")
+				(pintype "passive")
+			)
+			(node
+				(ref "U2")
+				(pin "BAT")
+				(pinfunction "BAT_BAT")
+				(pintype "passive")
+			)
+		)
+	)
+)

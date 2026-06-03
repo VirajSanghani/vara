@@ -229,3 +229,35 @@ still a **design, not a verified/fabricated board** — honesty rule #1 stands.
 Action when entering Phase 4: confirm `kicad-cli` is on PATH (`kicad-cli version`), then
 re-probe the actual schematic→footprint→BOM→export chain and record the real ceiling here
 before committing Phase-4 scope.
+
+---
+
+## Addendum 2 — 2026-06-03 (Phase 4 re-probe + install)
+
+**Install (macOS).** KiCad was not installed and `kicad-cli` was absent (re-confirmed).
+`brew install --cask kicad` **fetched** KiCad 10.0.3 (cached, ~1.4 GB) but its full cask
+install **fails non-interactively**: moving the `demos` artifact to
+`/Library/Application Support/kicad` needs `sudo` (no TTY for the password). **Routed around**
+without sudo: mounted the cached DMG (`hdiutil attach`), copied `KiCad.app` to
+`/Applications/KiCad/KiCad.app` (that dir is user-writable), symlinked the binary to
+`/opt/homebrew/bin/kicad-cli`. `kicad-cli version` → **10.0.3**. (If a clean cask install is
+wanted later, run `brew install --cask kicad` in a terminal so it can prompt for the password.)
+
+**Empirical ceiling of `kicad-cli` 10.0.3** (tested, not assumed):
+- Subcommands: `sch {erc, export{bom,netlist,pdf,svg,dxf,ps,python-bom}, upgrade}`, `sym`,
+  `fp`, `pcb {…export/drc…}`, `jobset`.
+- **It validates and exports; it does NOT create or place symbols** (no GUI scripting). So a
+  schematic must be **hand-authored as `.kicad_sch` s-expression**, then driven through the CLI.
+- **Verified chain (trivial 2-resistor probe):** hand-authored `.kicad_sch` with custom
+  embedded symbols + **global-labels-placed-at-pin-endpoints** for connectivity →
+  `kicad-cli sch erc` (runs, produces report), `sch export netlist` (**connectivity correct** —
+  the shared net joined both pins), `sch export bom` (CSV). PDF/SVG export also available.
+- Warnings seen (non-blocking): off-grid endpoints (fixed by snapping to the 1.27 mm grid);
+  "symbol/footprint library not in project table" (cosmetic — symbols are embedded so the file
+  opens; footprints are referenced by name for the BOM, not loaded).
+
+**Real Phase-4 ceiling → delivered depth:** openable, ERC-checked **`.kicad_sch`** (core +
+cartridge) + CLI-exported **netlist + BOM + PDF**. **PCB layout (`.kicad_pcb`) is NOT pursued**
+— `kicad-cli pcb` can export/DRC but cannot place or route, so a board would need GUI/hand
+authoring; per the brief, routing is "optional dessert" and we stop at the schematic depth.
+This is a **design**, not a DRC-clean or manufactured board (see `electronics.md` banner).

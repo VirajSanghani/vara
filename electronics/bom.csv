@@ -1,0 +1,31 @@
+Ref,Qty,Component,Value/Part,Package,Subsystem,Notes
+A1,1,Raspberry Pi Zero 2 W,RPi Zero 2 W,40-pin header + CSI,Core/Compute,The real brain; runs capture->API->TTS pipeline
+U2,1,PMIC (charger+boost+pathmgmt),IP5306,ESOP-8,Core/Power,Li-po charge + 5V boost + button + fuel gauge in one chip
+U6,1,LDO regulator 3V3,AP2112K-3.3 (600mA),SOT-23-5,Core/Power,Derives +3V3_SYS for peripherals + switched cartridge rail
+U5,1,Load switch (current-limited),TPS22918,SOT-23-6,Core/Cartridge,Switches/PWMs V+ to cartridge; ~150mA limit
+DS1,1,Display 1.69" IPS 240x280,ST7789V SPI module,FPC + carrier,Core/Display,Active 28.0x32.6mm; SPI + DC/RST/BLK
+MK1,1,I2S MEMS microphone,SPH0645LM4H-B,6-pin,Core/Audio,SEL->GND (left channel)
+U4,1,I2S Class-D amplifier,MAX98357A,QFN-16,Core/Audio,Mono 3.2W; DIN from Pi PCM_DOUT
+LS1,1,Speaker,8ohm 1W mini,Ø20mm,Core/Audio,Driven by U4
+SW1,1,Rotary encoder + push,EC11 (15mm),THT,Core/Control,A/B quadrature + SW; the single primary control
+J1,1,USB-C receptacle,USB-C 16-pin (power),SMD,Core/Power,Charge in; CC pulldowns R7/R8
+J2,1,Cartridge pogo connector (core),6-pos spring pins 2.54mm,Mill-Max-class,Core/Connector,The 6-pin contract: V+/GND/SDA/SCL/CD#/INT
+J3,1,CSI camera FFC connector,15-pin 1mm FFC,SMD,Core/Camera,Pi camera ribbon (NOT through pogo)
+CAM1,1,Camera module,RPi Camera v2 / IMX219,module,Core/Camera,Fixed in core; looks out optical bore
+BT1,1,Li-po battery,3.7V 1500mAh,pouch,Core/Power,Runtime ~3.5h est (architecture.md)
+R1,1,I2C pull-up SDA,4.7k,0402,Core/Connector,To +3V3_SYS
+R2,1,I2C pull-up SCL,4.7k,0402,Core/Connector,To +3V3_SYS
+R3,1,CD# pull-up,10k,0402,Core/Connector,Cartridge ties pin5 to GND
+R4,1,INT pull-up,10k,0402,Core/Connector,Cartridge drives pin6 low
+R5,1,U5 EN pull-down,100k,0402,Core/Cartridge,Default V+ off until Pi enables
+R7,1,USB-C CC1 pulldown,5.1k,0402,Core/Power,Sink role
+R8,1,USB-C CC2 pulldown,5.1k,0402,Core/Power,Sink role
+C1,1,Bulk cap +5V,22uF,0805,Core/Power,Boost output decoupling
+C2,1,Bulk cap +3V3_SYS,10uF,0603,Core/Power,LDO output
+C3,2,MCU/peripheral decoupling,100nF,0402,Core,Local bypass (qty per rail as needed)
+C4,1,IP5306 input cap,22uF,0805,Core/Power,
+U3,1,I2C EEPROM (cartridge ID),24AA02E48 @0x50,SOT-23-6/SOIC-8,Cartridge,128x8 + EUI-48; A0-A2->GND, WP->GND
+D1,6,LED ring,white 0603/PLCC,0603,Cartridge,Optional ring light; anode to V+
+R6,6,LED current-limit,220ohm,0402,Cartridge,Per-LED; sized to <=150mA total cartridge budget
+SW2,1,Shutter button (optional),tactile SPST,SMD,Cartridge,Drives INT (pin6) low; cartridge->core interrupt
+PADS1,1,Pogo pads (cartridge),6x flat gold pad Ø2.0,PCB land,Cartridge,Mates J2; 2.54mm pitch at X=6

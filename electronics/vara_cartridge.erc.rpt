@@ -1,0 +1,33 @@
+ERC report (2026-06-03T19:26:14, Encoding UTF8)
+Report includes: Errors, Warnings
+
+***** Sheet /
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 39.37 mm): Symbol PADS1 [PADS1]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(39.37 mm, 74.93 mm): Symbol U3 [U3]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 74.93 mm): Symbol U3 [U3]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 110.49 mm): Symbol LEDR1 [LEDR1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 144.78 mm): Symbol SW2 [SW2]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(39.37 mm, 180.34 mm): Symbol R9 [R9]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 180.34 mm): Symbol R9 [R9]
+
+ ** ERC messages: 7  Errors 0  Warnings 7
+
+ ** Ignored checks:
+    - Global label only appears once in the schematic
+    - Four connection points are joined together
+    - SPICE model issue
+    - Assigned footprint doesn't match footprint filters

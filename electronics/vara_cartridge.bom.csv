@@ -1,0 +1,6 @@
+"Reference","Value","Footprint","QUANTITY","Description"
+"LEDR1","LED ring 6x + 6x 220R","","1",""
+"PADS1","Pogo pads 6 (CART)","","1",""
+"R9","0R","Resistor_SMD:R_0402_1005Metric","1",""
+"SW2","Shutter (optional)","","1",""
+"U3","24AA02E48 @0x50","Package_TO_SOT_SMD:SOT-23-6","1",""

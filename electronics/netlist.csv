@@ -1,0 +1,37 @@
+Net,Nodes (Ref.Pin),Subsystem,Notes
++VBUS,J1.VBUS / U2.VIN / C4.1,Power,USB-C 5V charge input
+VBAT,U2.BAT / BT1.+ / C1ref,Power,Li-po cell
++5V,U2.VOUT / A1.2(5V) / A1.4(5V) / U4.VIN / U6.VIN / C1.1,Power,IP5306 boost rail -> Pi + amp + LDO
++3V3_SYS,U6.VOUT / DS1.VCC / MK1.3V3 / U5.VIN / R1.1 / R2.1 / R3.1 / R4.1 / C2.1,Power,Peripheral + (pre-switch) cartridge rail
+GND,A1.GND* / U2.GND / U6.GND / U5.GND / DS1.GND / MK1.GND / U4.GND / SW1.C / J1.GND / J2.2 / BT1.- / LS1.- / C*,Power,Common ground (J2.2 = pogo pin 2)
+USB_CC1,J1.CC1 / R7.1,Power,5.1k sink pulldown (R7.2->GND)
+USB_CC2,J1.CC2 / R8.1,Power,5.1k sink pulldown (R8.2->GND)
+SPI_SCLK,A1.23(GPIO11) / DS1.SCL,Display,SPI0 clock
+SPI_MOSI,A1.19(GPIO10) / DS1.SDA,Display,SPI0 MOSI
+DISP_CS,A1.24(GPIO8/CE0) / DS1.CS,Display,Chip select
+DISP_DC,A1.22(GPIO25) / DS1.DC,Display,Data/command
+DISP_RST,A1.18(GPIO24) / DS1.RES,Display,Reset
+DISP_BLK,A1.33(GPIO13/PWM1) / DS1.BLK,Display,Backlight PWM
+I2S_BCLK,A1.12(GPIO18) / MK1.BCLK / U4.BCLK,Audio,Shared I2S bit clock
+I2S_LRCLK,A1.35(GPIO19) / MK1.LRCL / U4.LRC,Audio,Shared I2S word select
+I2S_DIN,A1.38(GPIO20/PCM_DIN) / MK1.DOUT,Audio,Mic -> Pi
+I2S_DOUT,A1.40(GPIO21/PCM_DOUT) / U4.DIN,Audio,Pi -> amp
+SPK_P,U4.OUT+ / LS1.+,Audio,Speaker +
+SPK_N,U4.OUT- / LS1.-,Audio,Speaker - (BTL)
+ENC_A,A1.29(GPIO5) / SW1.A,Control,Quadrature A (internal pull-up)
+ENC_B,A1.31(GPIO6) / SW1.B,Control,Quadrature B (internal pull-up)
+ENC_SW,A1.36(GPIO16) / SW1.SW / U2.KEY,Control,Push: one net to Pi (UI) AND IP5306 KEY (power long-press) — shared-button risk noted in electronics.md
+CART_VEN,A1.37(GPIO26) / U5.EN / R5.1,Cartridge,Enable/PWM the switched V+ (R5->GND default off)
+I2C_SDA,A1.3(GPIO2/SDA1) / J2.3 / R1.2,Cartridge,Pogo pin 3 — EEPROM + sensors; pull-up R1
+I2C_SCL,A1.5(GPIO3/SCL1) / J2.4 / R2.2,Cartridge,Pogo pin 4 — pull-up R2
+CART_CD,A1.16(GPIO23) / J2.5 / R3.2,Cartridge,Pogo pin 5 = CD#; cartridge ties to GND -> seated
+CART_INT,A1.32(GPIO12) / J2.6 / R4.2,Cartridge,Pogo pin 6 = INT; cartridge drives low
+V+_SW,U5.VOUT / J2.1,Cartridge,Pogo pin 1 = switched 3V3 (<=150mA)
+CSI,A1.CSI / J3.* / CAM1.*,Camera,15-pin CSI-2 FFC (separate ribbon; NOT pogo)
+=== CARTRIDGE-SIDE (mates J2 via pogo pads PADS1) ===,,,
+CV+,PADS1.1 / U3.VCC / D1..D6.anode(via R6),Cartridge,Pin1 V+ -> EEPROM + LED ring
+CGND,PADS1.2 / U3.GND / U3.A0 / U3.A1 / U3.A2 / U3.WP / D1..D6.cathode_rtn / SW2.1,Cartridge,Pin2 GND; EEPROM addr=0x50 (A0-2->GND), WP->GND
+CSDA,PADS1.3 / U3.SDA,Cartridge,Pin3 SDA -> EEPROM
+CSCL,PADS1.4 / U3.SCL,Cartridge,Pin4 SCL -> EEPROM
+CCD,PADS1.5 / CGND,Cartridge,Pin5 CD# hard-tied to GND (presence)
+CINT,PADS1.6 / SW2.2,Cartridge,Pin6 INT <- shutter button (to GND when pressed)

@@ -1,0 +1,108 @@
+ERC report (2026-06-03T19:26:13, Encoding UTF8)
+Report includes: Errors, Warnings
+
+***** Sheet /
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 39.37 mm): Symbol A1 [A1]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_SO'
+    ; warning
+    @(39.37 mm, 74.93 mm): Symbol U2 [U2]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 74.93 mm): Symbol U2 [U2]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(39.37 mm, 110.49 mm): Symbol U6 [U6]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 110.49 mm): Symbol U6 [U6]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_TO_SOT_SMD'
+    ; warning
+    @(39.37 mm, 144.78 mm): Symbol U5 [U5]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 144.78 mm): Symbol U5 [U5]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 180.34 mm): Symbol DS1 [DS1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(39.37 mm, 214.63 mm): Symbol MK1 [MK1]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Package_DFN_QFN'
+    ; warning
+    @(100.33 mm, 39.37 mm): Symbol U4 [U4]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(100.33 mm, 39.37 mm): Symbol U4 [U4]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(100.33 mm, 74.93 mm): Symbol SW1 [SW1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(100.33 mm, 110.49 mm): Symbol J1 [J1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(100.33 mm, 144.78 mm): Symbol J3 [J3]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(100.33 mm, 180.34 mm): Symbol CAM1 [CAM1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(100.33 mm, 214.63 mm): Symbol BT1 [BT1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(160.02 mm, 39.37 mm): Symbol LS1 [LS1]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(160.02 mm, 74.93 mm): Symbol R1 [R1]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(160.02 mm, 74.93 mm): Symbol R1 [R1]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(160.02 mm, 110.49 mm): Symbol R2 [R2]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(160.02 mm, 110.49 mm): Symbol R2 [R2]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(160.02 mm, 144.78 mm): Symbol R3 [R3]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(160.02 mm, 144.78 mm): Symbol R3 [R3]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(160.02 mm, 180.34 mm): Symbol R4 [R4]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(160.02 mm, 180.34 mm): Symbol R4 [R4]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(160.02 mm, 214.63 mm): Symbol R5 [R5]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(160.02 mm, 214.63 mm): Symbol R5 [R5]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(219.71 mm, 39.37 mm): Symbol R7 [R7]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(219.71 mm, 39.37 mm): Symbol R7 [R7]
+[footprint_link_issues]: The current configuration does not include the footprint library 'Resistor_SMD'
+    ; warning
+    @(219.71 mm, 74.93 mm): Symbol R8 [R8]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(219.71 mm, 74.93 mm): Symbol R8 [R8]
+[lib_symbol_issues]: The current configuration does not include the symbol library 'VARA'
+    ; warning
+    @(219.71 mm, 110.49 mm): Symbol J2 [J2]
+
+ ** ERC messages: 32  Errors 0  Warnings 32
+
+ ** Ignored checks:
+    - Global label only appears once in the schematic
+    - Four connection points are joined together
+    - SPICE model issue
+    - Assigned footprint doesn't match footprint filters

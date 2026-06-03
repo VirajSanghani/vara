@@ -1,0 +1,650 @@
+(export
+	(version "E")
+	(design
+		(source "/Users/vs/Projects/vara/electronics/vara_cartridge.kicad_sch")
+		(date "2026-06-03T19:25:19")
+		(tool "Eeschema 10.0.3")
+		(sheet
+			(number "1")
+			(name "/")
+			(tstamps "/")
+			(title_block
+				(title "VARA Vision Cartridge")
+				(company)
+				(rev)
+				(date "2026-06-03")
+				(source "vara_cartridge.kicad_sch")
+				(comment
+					(number "1")
+					(value "VARA — DESIGN ONLY, not verified")
+				)
+				(comment
+					(number "2")
+					(value "")
+				)
+				(comment
+					(number "3")
+					(value "")
+				)
+				(comment
+					(number "4")
+					(value "")
+				)
+				(comment
+					(number "5")
+					(value "")
+				)
+				(comment
+					(number "6")
+					(value "")
+				)
+				(comment
+					(number "7")
+					(value "")
+				)
+				(comment
+					(number "8")
+					(value "")
+				)
+				(comment
+					(number "9")
+					(value "")
+				)
+			)
+		)
+	)
+	(components
+		(comp
+			(ref "LEDR1")
+			(value "LED ring 6x + 6x 220R")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "LEDR1")
+				(description "Optional ring light (<=150mA budget)")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_cartridge.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "be1e9523-5777-41b9-8858-ff4743d53dc1")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "A")
+						)
+						(pin
+							(num "K")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "PADS1")
+			(value "Pogo pads 6 (CART)")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "PADS1")
+				(description "Mates J2 — connector-spec v0.2")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_cartridge.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "887839f3-b9a9-4e6c-98ae-2e4526d5592b")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+						(pin
+							(num "3")
+						)
+						(pin
+							(num "4")
+						)
+						(pin
+							(num "5")
+						)
+						(pin
+							(num "6")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "R9")
+			(value "0R")
+			(footprint "Resistor_SMD:R_0402_1005Metric")
+			(fields
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "R9")
+				(description "CD# tie to GND (presence)")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_cartridge.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "b7ca6247-7db3-4520-9c82-c04df7a0b766")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "SW2")
+			(value "Shutter (optional)")
+			(fields
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "SW2")
+				(description "Drives INT low")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_cartridge.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "19b45f3e-2b9b-4a7e-8706-4fbd88bf4127")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "1")
+						)
+						(pin
+							(num "2")
+						)
+					)
+				)
+			)
+		)
+		(comp
+			(ref "U3")
+			(value "24AA02E48 @0x50")
+			(footprint "Package_TO_SOT_SMD:SOT-23-6")
+			(fields
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description")
+				)
+			)
+			(libsource
+				(lib "VARA")
+				(part "U3")
+				(description "ID EEPROM")
+			)
+			(property
+				(name "Sheetname")
+				(value "")
+			)
+			(property
+				(name "Sheetfile")
+				(value "vara_cartridge.kicad_sch")
+			)
+			(sheetpath
+				(names "/")
+				(tstamps "/")
+			)
+			(tstamps "e785936a-6fc3-4466-8253-26cb5d22c11d")
+			(units
+				(unit
+					(name "A")
+					(pins
+						(pin
+							(num "VCC")
+						)
+						(pin
+							(num "GND")
+						)
+						(pin
+							(num "SDA")
+						)
+						(pin
+							(num "SCL")
+						)
+						(pin
+							(num "WP")
+						)
+						(pin
+							(num "A0")
+						)
+					)
+				)
+			)
+		)
+	)
+	(groups)
+	(variants)
+	(libparts
+		(libpart
+			(lib "VARA")
+			(part "LEDR1")
+			(description "Optional ring light (<=150mA budget)")
+			(fields
+				(field
+					(name "Reference") "L")
+				(field
+					(name "Value") "LED ring 6x + 6x 220R")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Optional ring light (<=150mA budget)")
+			)
+			(pins
+				(pin
+					(num "A")
+					(name "ANODE")
+					(type "passive")
+				)
+				(pin
+					(num "K")
+					(name "CATH")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "PADS1")
+			(description "Mates J2 — connector-spec v0.2")
+			(fields
+				(field
+					(name "Reference") "P")
+				(field
+					(name "Value") "Pogo pads 6 (CART)")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Mates J2 — connector-spec v0.2")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "V+")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "3")
+					(name "SDA")
+					(type "passive")
+				)
+				(pin
+					(num "4")
+					(name "SCL")
+					(type "passive")
+				)
+				(pin
+					(num "5")
+					(name "CD#")
+					(type "passive")
+				)
+				(pin
+					(num "6")
+					(name "INT")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "R9")
+			(description "CD# tie to GND (presence)")
+			(fields
+				(field
+					(name "Reference") "R")
+				(field
+					(name "Value") "0R")
+				(field
+					(name "Footprint") "Resistor_SMD:R_0402_1005Metric")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "CD# tie to GND (presence)")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "SW2")
+			(description "Drives INT low")
+			(fields
+				(field
+					(name "Reference") "S")
+				(field
+					(name "Value") "Shutter (optional)")
+				(field
+					(name "Footprint")
+				)
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "Drives INT low")
+			)
+			(pins
+				(pin
+					(num "1")
+					(name "1")
+					(type "passive")
+				)
+				(pin
+					(num "2")
+					(name "2")
+					(type "passive")
+				)
+			)
+		)
+		(libpart
+			(lib "VARA")
+			(part "U3")
+			(description "ID EEPROM")
+			(fields
+				(field
+					(name "Reference") "U")
+				(field
+					(name "Value") "24AA02E48 @0x50")
+				(field
+					(name "Footprint") "Package_TO_SOT_SMD:SOT-23-6")
+				(field
+					(name "Datasheet")
+				)
+				(field
+					(name "Description") "ID EEPROM")
+			)
+			(pins
+				(pin
+					(num "A0")
+					(name "A0")
+					(type "passive")
+				)
+				(pin
+					(num "GND")
+					(name "GND")
+					(type "passive")
+				)
+				(pin
+					(num "SCL")
+					(name "SCL")
+					(type "passive")
+				)
+				(pin
+					(num "SDA")
+					(name "SDA")
+					(type "passive")
+				)
+				(pin
+					(num "VCC")
+					(name "VCC")
+					(type "passive")
+				)
+				(pin
+					(num "WP")
+					(name "WP")
+					(type "passive")
+				)
+			)
+		)
+	)
+	(libraries)
+	(nets
+		(net
+			(code "1")
+			(name "CCD")
+			(class "Default")
+			(node
+				(ref "PADS1")
+				(pin "5")
+				(pinfunction "CD#_5")
+				(pintype "passive")
+			)
+			(node
+				(ref "R9")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "2")
+			(name "CGND")
+			(class "Default")
+			(node
+				(ref "LEDR1")
+				(pin "K")
+				(pinfunction "CATH_K")
+				(pintype "passive")
+			)
+			(node
+				(ref "PADS1")
+				(pin "2")
+				(pinfunction "GND_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R9")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW2")
+				(pin "2")
+				(pinfunction "2_2")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "A0")
+				(pinfunction "A0_A0")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "GND")
+				(pinfunction "GND_GND")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "WP")
+				(pinfunction "WP_WP")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "3")
+			(name "CINT")
+			(class "Default")
+			(node
+				(ref "PADS1")
+				(pin "6")
+				(pinfunction "INT_6")
+				(pintype "passive")
+			)
+			(node
+				(ref "SW2")
+				(pin "1")
+				(pinfunction "1_1")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "4")
+			(name "CSCL")
+			(class "Default")
+			(node
+				(ref "PADS1")
+				(pin "4")
+				(pinfunction "SCL_4")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "SCL")
+				(pinfunction "SCL_SCL")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "5")
+			(name "CSDA")
+			(class "Default")
+			(node
+				(ref "PADS1")
+				(pin "3")
+				(pinfunction "SDA_3")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "SDA")
+				(pinfunction "SDA_SDA")
+				(pintype "passive")
+			)
+		)
+		(net
+			(code "6")
+			(name "CV+")
+			(class "Default")
+			(node
+				(ref "LEDR1")
+				(pin "A")
+				(pinfunction "ANODE_A")
+				(pintype "passive")
+			)
+			(node
+				(ref "PADS1")
+				(pin "1")
+				(pinfunction "V+_1")
+				(pintype "passive")
+			)
+			(node
+				(ref "U3")
+				(pin "VCC")
+				(pinfunction "VCC_VCC")
+				(pintype "passive")
+			)
+		)
+	)
+)
