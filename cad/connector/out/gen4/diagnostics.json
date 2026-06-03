@@ -1,0 +1,121 @@
+{
+  "name": "gen4",
+  "ok": true,
+  "shape_kind": "Compound",
+  "bbox": {
+    "min": [
+      -2.4000000000000004,
+      -20.20083015283884,
+      -2.4000000000000004
+    ],
+    "max": [
+      26.4,
+      20.20083015283884,
+      12.0
+    ],
+    "size": [
+      28.799999999999997,
+      40.40166030567768,
+      14.4
+    ]
+  },
+  "volume_mm3": 8910.387329737165,
+  "surface_area_mm2": 7202.16126968038,
+  "mass_g": 11.048880288874082,
+  "center_of_mass": [
+    12.118055753812513,
+    -1.658658412579472e-16,
+    3.626483682551008
+  ],
+  "watertight": true,
+  "solids": 4,
+  "shells": 4,
+  "faces": 70,
+  "edges": 174,
+  "vertices": 116,
+  "min_wall_mm": null,
+  "max_overhang_deg": null,
+  "interferences": [
+    {
+      "a": 0,
+      "b": 1,
+      "volume_mm3": null,
+      "note": "bbox-only"
+    },
+    {
+      "a": 0,
+      "b": 2,
+      "volume_mm3": null,
+      "note": "bbox-only"
+    }
+  ],
+  "clearances": [
+    {
+      "a": 0,
+      "b": 3,
+      "min_mm": 1.9999999999999982
+    },
+    {
+      "a": 1,
+      "b": 2,
+      "min_mm": 29.400000000000002
+    },
+    {
+      "a": 1,
+      "b": 3,
+      "min_mm": 2.1999999999999993
+    },
+    {
+      "a": 2,
+      "b": 3,
+      "min_mm": 2.1999999999999993
+    }
+  ],
+  "warnings": [],
+  "errors": [],
+  "requirement_results": [
+    {
+      "name": "req_captive",
+      "ok": true
+    },
+    {
+      "name": "req_clearance",
+      "ok": true
+    },
+    {
+      "name": "req_central_channel_clear",
+      "ok": true
+    },
+    {
+      "name": "req_envelope",
+      "ok": true
+    },
+    {
+      "name": "req_min_wall",
+      "ok": true
+    },
+    {
+      "name": "req_solids_valid",
+      "ok": true
+    }
+  ],
+  "params": {
+    "dovetail_angle": 55.0,
+    "flank_clearance": 0.15,
+    "detent_depth": 0.45,
+    "rail_length": 24.0,
+    "wall_thk": 2.4,
+    "lead_in_chamfer": 1.2,
+    "engage_depth": 4.0,
+    "mouth_w": 4.0,
+    "rail_offset": 13.0,
+    "plate_thk": 2.0,
+    "detent_pos": 2.5,
+    "detent_w": 4.0,
+    "finger": true,
+    "finger_len": 12.0,
+    "finger_thk": 1.2,
+    "print_tol": 0.075
+  },
+  "notes": []
+}

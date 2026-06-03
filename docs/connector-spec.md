@@ -1,4 +1,4 @@
-# VARA Cartridge Interface — CONTRACT SPEC v0.1
+# VARA Cartridge Interface — CONTRACT SPEC v0.2
 
 **Date:** 2026-06-03 · **Status:** contract frozen for Phase 2/3; dovetail *profile* is a
 Phase-2 study variable (clearly tagged below). **This document is the single source of
@@ -119,16 +119,24 @@ mechanically staggered pin lengths (which we can't validate without hardware).
 
 These define the *cross-section* being optimized. **Not** part of the frozen contract —
 the current best geometry always lives in `cad/connector/` and feeds Part IV's study.
+**Resolved in Phase 2 — see [`dovetail-study.md`](dovetail-study.md) for the 6-generation
+derivation.** Configuration: **dual rails at Y = ±13 mm** flanking the central pad/optical
+channel (a single central rail would collide with the pads + optical bore).
 
-| Param | Seed value | Meaning |
-|---|---|---|
-| `dovetail_angle` | **55°** | Flank angle measured **from the base plane** (Z=0). Convention: 90° = vertical prismatic wall (no undercut); <90° = undercut. **55° ⇒ 35° overhang on the undercut flanks** — directly couples to print orientation (see §6). |
-| `flank_clearance` | **0.20 mm** | per-side male↔female gap. Drives §3.1 alignment vs. wear/insertion feel. |
-| `detent_depth` | **0.6 mm** | bump/groove engagement giving the click + retention |
-| `rail_length` | **24 mm** | bearing length along X (also in §2) |
-| `wall_thk` | **2.4 mm** | female wall around the male (≈6 perimeters @0.4 mm nozzle) |
-| `lead_in_chamfer` | **1.0 mm** | at the +X open mouth, for easy starting |
-| detent position | **X ≈ +2.5 mm** | clicks just before the X=0 hard stop |
+| Param | Seed | **Resolved (Gen 6)** | Meaning |
+|---|---|---|---|
+| `dovetail_angle` | 55° | **55°** | Flank angle from base plane (Z=0). 90° = vertical; <90° = undercut. 55° ⇒ 35°-from-vertical flanks — self-supporting when printed rail-axis-vertical (see §6). |
+| `flank_clearance` | 0.20 mm | **0.13 mm** | per-side gap. Tightened to hold the ±0.3 mm budget with margin (E_align = 0.28 mm). |
+| `detent_depth` | 0.6 mm | **0.50 mm** | snap engagement; balances retention (~10.6 N) vs. finger strain. |
+| `rail_length` | 24 mm | **26 mm** | bearing length; keeps pads (X=6) & optical (X=15) well inside the span. |
+| `wall_thk` | 2.4 mm | **2.4 mm** | female wall (≈6 perimeters @0.4 mm nozzle). |
+| `lead_in_chamfer` | 1.0 mm | **1.2 mm** | +X mouth lead-in. |
+| detent | X ≈ +2.5 mm | **cantilever finger 13×1.1 mm, one per rail** | Gen 1's wall-flex detent over-strained ~5×; replaced by dedicated snap fingers. |
+| (print req) | — | **rail-axis-vertical; per-part tol ≤ ±0.075 mm** | required to meet alignment + keep flanks support-free. |
+
+**Resolved performance (analytical, validated-by-design — NOT tested):** alignment
+**0.28 mm ≤ 0.30**; detent **SF_yield 5.1 / SF_interlayer 2.56**; insertion **~2.9 N**,
+retention **~10.6 N**; all geometry gates 6/6, watertight.
 
 **Objectives in tension (per plan §4.2):** stiffness↔printability ·
 retention force↔insertion ease · tight fit (alignment)↔wear life · wall thickness↔size.
@@ -162,6 +170,9 @@ retention force↔insertion ease · tight fit (alignment)↔wear life · wall th
 ---
 
 ## Change log
+- **v0.2** (2026-06-03): Phase 2 resolved the [STUDY] dovetail profile (§5) — dual rails,
+  cantilever snap fingers, c=0.13, rail_length=26, etc. **[CONTRACT] sections unchanged.**
+  See `dovetail-study.md`.
 - **v0.1** (2026-06-03): initial contract. Camera in core; optics-only hero cartridge;
   6-pin pogo (V+/GND/SDA/SCL/CD#/INT); EEPROM ID @0x50; ±0.3 mm alignment budget serving
   pads *and* optical axis; dovetail profile seeded for Phase 2.
