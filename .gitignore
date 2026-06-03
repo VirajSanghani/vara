@@ -26,3 +26,6 @@ web/dist/
 
 # Phase 5 prototype demo scratch (regenerate: python3 -m app.demo)
 app/_out/
+
+# browser test scratch
+.playwright-mcp/
