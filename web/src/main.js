@@ -9,7 +9,7 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { SAOPass } from 'three/addons/postprocessing/SAOPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-import { PARTS_V2, SCREWS, FORM_NOTE, GENS, STORY, FRAMES, HONESTY } from './data.js';
+import { PARTS_V3, SCREWS, SCREWS_PI, FORM_NOTE, GENS, STORY, FRAMES, HONESTY } from './data.js';
 
 const $ = (s) => document.querySelector(s);
 const isMobile = matchMedia('(max-width:780px)').matches;
@@ -163,9 +163,9 @@ $('#storySteps').innerHTML = STORY.map((s, i) => `<div class="story-step" data-i
 $('#frameStrip').innerHTML = FRAMES.map((f) => `<div class="frame"><img src="${f.src}" alt="${f.cap}" loading="lazy"/><span>${f.cap}</span></div>`).join('');
 
 const camViews = isMobile ? {
-  explode: { pos: [70, 150, 320], tgt: [-4, -14, 0] }, evolution: { pos: [55, 42, 122], tgt: [0, 0, 0] }, identify: { pos: [150, 72, 200], tgt: [0, -16, 0] },
+  explode: { pos: [80, 175, 360], tgt: [-4, 0, 0] }, evolution: { pos: [55, 42, 122], tgt: [0, 0, 0] }, identify: { pos: [165, 70, 215], tgt: [0, -10, 0] },
 } : {
-  explode: { pos: [150, 182, 286], tgt: [-26, 4, 0] }, evolution: { pos: [70, 48, 92], tgt: [0, 0, 0] }, identify: { pos: [165, 78, 150], tgt: [0, -4, 0] },
+  explode: { pos: [165, 205, 320], tgt: [-28, 6, 0] }, evolution: { pos: [70, 48, 92], tgt: [0, 0, 0] }, identify: { pos: [185, 80, 165], tgt: [0, -8, 0] },
 };
 let camTween = null;
 function flyTo(v) { camTween = { pos: new THREE.Vector3(...v.pos), tgt: new THREE.Vector3(...v.tgt) }; }
@@ -194,8 +194,8 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
 
 // ---- boot ----
 (async function init() {
-  const objs = await Promise.all(PARTS_V2.map((c) => load(`assets/models/${c.id}.glb`)));
-  PARTS_V2.forEach((comp, i) => {
+  const objs = await Promise.all(PARTS_V3.map((c) => load(`assets/models/${c.id}.glb`)));
+  PARTS_V3.forEach((comp, i) => {
     const o = objs[i]; applyMat(o, MATS[comp.mat] || MATS.evo);
     (comp.group === 'cart' ? cartGroup : coreGroup).add(o);
     explodables.push({ obj: o, exZ: comp.exZ });
@@ -203,15 +203,17 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
     if (comp.id === 'display') {
       const tex = new THREE.TextureLoader().load('assets/frames/sample_result.png'); tex.colorSpace = THREE.SRGBColorSpace;
       const plane = new THREE.Mesh(new THREE.PlaneGeometry(27, 32), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
-      plane.position.set(13, 2, -14.55); plane.rotation.y = Math.PI; o.add(plane);
+      plane.position.set(13, -2, -16.55); plane.rotation.y = Math.PI; o.add(plane);
     }
   });
-  // 4× M2.5 screws (instanced), with one shared leader
-  const screw0 = await load('assets/models/screw.glb'); applyMat(screw0, MATS.metalS);
+  // case screws (back cover → front bosses) + Pi-mount screws — each in its real hole
+  const sc = await load('assets/models/screw.glb'); applyMat(sc, MATS.metalS);
   SCREWS.forEach((p, i) => {
-    const s = screw0.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 58 });
-    if (i === 0) addLeader(s, { anchor: [0, 0, 1.5], side: 1, kind: 'designed', title: 'M2.5 screws ×4', what: 'Fix the back cover to the front housing.', why: 'DESIGNED fasteners — socket-head cap screws, ISO 4762 dimensions.' });
+    const s = sc.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 56 });
+    if (i === 0) addLeader(s, { anchor: [0, 0, 1.5], side: 1, kind: 'designed', title: 'M2.5 screws ×4', what: 'Fix the back cover to the front housing.', why: 'DESIGNED fasteners — socket-head cap screws, ISO 4762 dimensions. Each seats in a cover counterbore and threads into a front-housing boss.' });
   });
+  const scp = await load('assets/models/screw_pi.glb'); applyMat(scp, MATS.metalS);
+  SCREWS_PI.forEach((p) => { const s = scp.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: -46 }); });
   frameCamera(); $('#loader').classList.add('gone'); setScene('explode');
 })().catch((e) => { console.error(e); $('#loader').innerHTML = 'Failed to load geometry.<br>Serve over http (not file://).'; });
 
@@ -232,8 +234,8 @@ function animate() {
   slideP += (slideTarget - slideP) * Math.min(1, dt * 1.25);
   explodables.forEach(({ obj, exZ }) => { obj.position.z = exZ * explodeT; });
   if (scene_ === 'identify') {
-    const p = slideP, SPLIT = 0.32, LIFT = 26, SLIDE = 48;
-    cartGroup.position.set(p > SPLIT ? SLIDE * (p - SPLIT) / (1 - SPLIT) : 0, 0, p > SPLIT ? LIFT : LIFT * (p / SPLIT));
+    // clean straight slide-in along the OPEN dovetail channel (no lift, no wall clipping)
+    cartGroup.position.set(slideP * 52, 0, 0);
   } else cartGroup.position.set(0, 0, 0);
   const la = scene_ === 'explode' ? Math.min(1, Math.max(0, explodeT * 2.2 - 0.25)) : 0;
   leaders.forEach((m) => { m.el.style.opacity = la; m.dotEl.style.opacity = la; if (m.line) m.line.material.opacity = la * 0.5; });

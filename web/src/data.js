@@ -76,7 +76,44 @@ export const INTERNALS = [
 // fasteners, cartridge + optics, and representative internals at real datasheet dims.
 // kind 'designed' = our geometry (exact dims); 'rep' = real-dimension stand-in (off-the-shelf,
 // never a routed PCB). exZ = explode offset (mating axis); side = leader label direction.
-export const SCREWS = [[-3.5, -39.5, 1.5], [29.5, -39.5, 1.5], [-3.5, 15.5, 1.5], [29.5, 15.5, 1.5]];
+// case screws (back cover → front bosses) and Pi-mount screws — every one in a real hole.
+export const SCREWS = [[-5, -59, 1.5], [31, -59, 1.5], [-5, 17, 1.5], [31, 17, 1.5]];
+export const SCREWS_PI = [[1.5, -53, -9.5], [24.5, -53, -9.5], [1.5, 5, -9.5], [24.5, 5, -9.5]];
+export const PARTS_V3 = [
+  { id: 'glass', group: 'core', mat: 'glass', kind: 'designed', exZ: -88, side: 1, label: true,
+    anchor: [13, -2, -17], title: 'Glass screen cover', what: 'Tinted cover over the display.', why: 'Designed glass — the screen reads through it.' },
+  { id: 'display', group: 'core', mat: 'screen', kind: 'rep', exZ: -70, side: 1, label: true,
+    anchor: [13, 6, -15], title: '1.69″ display — 240×280', what: 'Viewfinder + caption.', why: 'Representative panel at real module dims. The frame on it is a REAL Phase-5 render.' },
+  { id: 'speaker', group: 'core', mat: 'black', kind: 'rep', exZ: -70, side: -1, label: false, anchor: [13, -56, -15] },
+  { id: 'camera', group: 'core', mat: 'black', kind: 'rep', exZ: -52, side: 1, label: true,
+    anchor: [15, 7, 1], title: 'Camera + CSI', what: 'Fixed; looks out the optical bore.', why: 'Representative module (real dims), on the CSI ribbon — not the pogo.' },
+  { id: 'pi', group: 'core', mat: 'pcb', kind: 'rep', exZ: -46, side: -1, label: true,
+    anchor: [13, 6, -11], title: 'Raspberry Pi Zero 2 W', what: 'The brain.', why: 'Representative at real dims (65×30, holes 58×23) — not a PCB we routed (Phase 4).' },
+  { id: 'carrier', group: 'core', mat: 'pcb', kind: 'rep', exZ: -30, side: 1, label: true,
+    anchor: [13, -44, -6.5], title: 'Carrier PCB — USB-C, PMIC, amp', what: 'Power + audio + the cartridge/display connectors.', why: 'Representative board (real outline). The schematic is designed (Phase 4); we never imply a routed board.' },
+  { id: 'battery', group: 'core', mat: 'cell', kind: 'rep', exZ: -14, side: -1, label: true,
+    anchor: [13, -38, -2.5], title: 'Li-po — 1500 mAh', what: 'Powers the device; ~3.5 h (est).', why: 'Representative cell at real dimensions.' },
+  { id: 'core_front', group: 'core', mat: 'stone', kind: 'designed', exZ: 0, side: 1, label: true,
+    anchor: [29, -34, -9], title: 'Core — front housing', what: 'Holds screen, electronics, controls.', why: 'Designed enclosure: bezel, USB-C, jog-wheel pocket, speaker grille, 4 screw bosses + Pi standoffs. 46×86×22 mm.' },
+  { id: 'wheel', group: 'core', mat: 'metalA', kind: 'designed', exZ: 0, side: 0, label: false, anchor: [37, -40, -9] },
+  { id: 'button', group: 'core', mat: 'metalA', kind: 'designed', exZ: 0, side: 0, label: false, anchor: [37, -16, -9] },
+  { id: 'encoder', group: 'core', mat: 'black', kind: 'designed', exZ: 0, side: 0, label: false, anchor: [29, -40, -9] },
+  { id: 'mic', group: 'core', mat: 'chip', kind: 'rep', exZ: 0, side: 0, label: false, anchor: [24, -60, -11] },
+  { id: 'pogo', group: 'core', mat: 'gold', kind: 'designed', exZ: 16, side: -1, label: true,
+    anchor: [6, 7, 7], title: 'Pogo pins ×6', what: 'V+, GND, I²C SDA/SCL, CD#, INT.', why: 'DESIGNED contacts (connector-spec v0.2).' },
+  { id: 'core_back', group: 'core', mat: 'stone', kind: 'designed', exZ: 38, side: -1, label: true,
+    anchor: [29, 16, 3], title: 'Back cover', what: 'Carries the female rail socket + optical bore.', why: 'Designed cover — open dovetail channel to the edge so the cartridge slides in; fixed by 4× M2.5 screws.' },
+  { id: 'eeprom', group: 'cart', mat: 'chip', kind: 'rep', exZ: 52, side: 1, label: true,
+    anchor: [22, 0, 5], title: 'ID EEPROM @ 0x50', what: 'Identifies the cartridge.', why: 'Representative chip; the ID scheme + pads are ours.' },
+  { id: 'cartridge', group: 'cart', mat: 'amber', kind: 'designed', exZ: 70, side: -1, label: true,
+    anchor: [9, 13, 9], title: 'Vision cartridge', what: 'A macro lens on the core’s eye.', why: 'Optics only; slides into the open channel along the dovetail. Male rail resolved over 6 generations.' },
+  { id: 'ledring', group: 'cart', mat: 'pcb', kind: 'rep', exZ: 86, side: 1, label: true,
+    anchor: [15, 8, 8], title: 'LED ring (optional)', what: 'Ring light around the lens.', why: 'Representative; switched V+ rail, ≤150 mA.' },
+  { id: 'lensring', group: 'cart', mat: 'metalA', kind: 'designed', exZ: 102, side: -1, label: true,
+    anchor: [15, 0, 18], title: 'Lens retaining ring', what: 'Holds the macro optics.', why: 'Designed knurled ring; the optics it retains are representative.' },
+];
+
+// (legacy)
 export const PARTS_V2 = [
   { id: 'glass', group: 'core', mat: 'glass', kind: 'designed', exZ: -54, side: 1, label: true,
     anchor: [13, 9, -16], title: 'Glass screen cover',
@@ -163,7 +200,7 @@ export const COMPONENTS = [
 ];
 
 export const FORM_NOTE =
-  'VARA is 44 × 64 × 20 mm — chunky by consequence, not by style: the 35.6 mm dovetail rail span ' +
+  'VARA is 46 × 86 × 22 mm — chunky by consequence, not by style: the 35.6 mm dovetail rail span ' +
   'plus the display set the size. An honest instrument, not a phone pretending to be thin.';
 
 // CONNECTOR EVOLUTION — the 6 generations with real analytical numbers (dovetail-study.md).
