@@ -6,7 +6,8 @@
   --serif:'Fraunces',Georgia,serif; --mono:'JetBrains Mono',ui-monospace,monospace;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--stone-0);color:var(--ink);font-family:var(--mono);overflow:hidden}
+html,body{height:100%;color:var(--ink);font-family:var(--mono);overflow:hidden;
+  background:radial-gradient(120% 100% at 50% 32%, #26241d 0%, #16150f 52%, #0b0b09 100%)}
 body{-webkit-font-smoothing:antialiased}
 #webgl{position:fixed;inset:0}
 #webgl canvas{display:block}
@@ -74,6 +75,18 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .frame img{width:100%;border:1px solid var(--stone-3);border-radius:3px;display:block;image-rendering:auto}
 .frame span{font-size:9px;color:var(--faint);display:block;margin-top:4px;line-height:1.3}
 
+/* leader-line labels (teardown annotations) */
+.leadlabel{pointer-events:auto;cursor:pointer;white-space:nowrap;
+  font-family:var(--mono);font-size:11px;color:var(--ink);background:rgba(20,19,16,.82);
+  border:1px solid var(--stone-3);border-radius:3px;padding:4px 9px;display:flex;align-items:center;gap:8px;
+  backdrop-filter:blur(3px);transition:border-color .15s,background .15s}
+.leadlabel:hover,.leadlabel.active{border-color:var(--amber);background:rgba(38,30,18,.9)}
+.ll-kind{font-size:8.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 5px;border-radius:2px}
+.ll-kind.rep{color:var(--mute);border:1px solid var(--stone-3)}
+.ll-kind.designed{color:var(--stone-0);background:var(--amber)}
+.leaddot{width:7px;height:7px;border-radius:50%;background:var(--amber);
+  box-shadow:0 0 0 3px rgba(214,138,46,.22);transform:translate(-50%,-50%)}
+
 /* 3D callout markers + popover */
 .marker{pointer-events:auto;cursor:pointer;width:18px;height:18px;border-radius:50%;
   border:1.5px solid var(--amber);background:rgba(214,138,46,.18);display:grid;place-items:center;
@@ -119,4 +132,9 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
   #callout{right:12px;left:12px;width:auto;top:auto;bottom:200px;transform:none}
   #callout.hidden{transform:translateY(14px)}
   #scenenav button{font-size:11px;padding:6px 9px}
+  .formnote{display:none}                /* trim verbose panel on small screens */
+  .panel .lede{font-size:12px}
+  .leadlabel{font-size:9.5px;padding:3px 6px;gap:5px}
+  .ll-kind{display:none}                  /* shorten labels so they don't crowd portrait */
+  #panel-explode{bottom:30px}
 }

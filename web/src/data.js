@@ -72,6 +72,50 @@ export const INTERNALS = [
     why: 'Representative chip; the ID scheme + pad layout are ours (connector-spec §4.1).' },
 ];
 
+// FULL TEARDOWN — every component, grouped core-side / cart-side, fanned on the mating axis.
+// exZ = explode offset (part +Z → world up). side = which way the leader label points.
+// kind 'designed' = real geometry we authored; 'rep' = dimensional stand-in (off-the-shelf,
+// not fabricated by us, never a routed PCB). anchor = a point on the part (part mm).
+export const COMPONENTS = [
+  // ---- core side ----
+  { id: 'optics', model: 'optics', group: 'cart', mat: 'glass', kind: 'rep', exZ: 80, side: 1,
+    anchor: [15, 0, 12], title: 'Macro-lens optics',
+    what: 'Lens elements inside the cartridge barrel.',
+    why: 'Representative — the barrel that holds and aligns them IS our designed geometry.' },
+  { id: 'cartridge', model: 'cartridge', group: 'cart', mat: 'amber', kind: 'designed', exZ: 58, side: -1,
+    anchor: [9, 13, 9], title: 'Vision cartridge',
+    what: 'Re-aims perception — a macro lens on the core’s eye.',
+    why: 'Optics only; the camera stays in the core (CSI is too fast for the 6-pin pogo). The male rail was resolved across 6 generations — see the Connector scene.' },
+  { id: 'eeprom', model: 'eeprom', group: 'cart', mat: 'black', kind: 'rep', exZ: 44, side: 1,
+    anchor: [22, 0, 5], title: 'ID EEPROM @ 0x50',
+    what: 'Tells the core which cartridge is mounted.',
+    why: 'Representative chip; the ID scheme + pad layout are ours (connector-spec §4.1).' },
+  { id: 'pogo', model: 'pogo', group: 'core', mat: 'gold', kind: 'designed', exZ: 20, side: -1,
+    anchor: [6, 4, 7], title: 'Pogo pins ×6',
+    what: 'Spring contacts: V+, GND, I²C SDA/SCL, CD#, INT.',
+    why: 'DESIGNED — the real contract geometry (connector-spec v0.2), not a bought part.' },
+  { id: 'core', model: 'core', group: 'core', mat: 'stone', kind: 'designed', exZ: 0, side: 1,
+    anchor: [24, -8, -6], title: 'Core body',
+    what: 'Perceives — houses the camera, Pi, display, audio and power.',
+    why: 'Camera coaxial to the cartridge lens (±0.28 mm budget); dual female rail sockets flank the centre; the snap-finger root fillet is functional. 44×64×20 mm — sized by the 35.6 mm rail span, not styled thin.' },
+  { id: 'camera', model: 'camera', group: 'core', mat: 'black', kind: 'rep', exZ: -20, side: -1,
+    anchor: [15, 6, 1], title: 'Camera + CSI',
+    what: 'Fixed in the core; looks out the optical bore.',
+    why: 'Representative module, on the CSI ribbon — NOT the pogo (CSI is far too fast for the 6-pin contract).' },
+  { id: 'display', model: 'display', group: 'core', mat: 'screen', kind: 'rep', exZ: -40, side: 1,
+    anchor: [13, 11, -14], title: '1.69″ display — 240×280',
+    what: 'Live viewfinder + result caption.',
+    why: 'Representative body. The frame on its face is a REAL Phase-5 render, not a mock-up.' },
+  { id: 'pi', model: 'pi', group: 'core', mat: 'pcb', kind: 'rep', exZ: -58, side: -1,
+    anchor: [13, 14, -6], title: 'Raspberry Pi Zero 2 W',
+    what: 'The brain: capture → cloud vision → display + speak.',
+    why: 'Representative body — the real module, not a PCB we laid out (KiCad couldn’t route; Phase 4). We never imply a board.' },
+  { id: 'battery', model: 'battery', group: 'core', mat: 'cell', kind: 'rep', exZ: -74, side: -1,
+    anchor: [13, -28, -6], title: 'Li-po — 1500 mAh',
+    what: 'Powers the device; runtime ≈ 3.5 h (estimate).',
+    why: 'Representative pouch — a dimensional stand-in for an off-the-shelf cell.' },
+];
+
 export const FORM_NOTE =
   'VARA is 44 × 64 × 20 mm — chunky by consequence, not by style: the 35.6 mm dovetail rail span ' +
   'plus the display set the size. An honest instrument, not a phone pretending to be thin.';

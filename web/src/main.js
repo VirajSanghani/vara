@@ -4,12 +4,11 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/addons/utils/BufferGeometryUtils.js';
-import { PARTS, INTERNALS, FORM_NOTE, GENS, STORY, FRAMES, HONESTY } from './data.js';
+import { COMPONENTS, FORM_NOTE, GENS, STORY, FRAMES, HONESTY } from './data.js';
 
 const $ = (s) => document.querySelector(s);
 const isMobile = matchMedia('(max-width:780px)').matches;
 
-// ---- WebGL guard ----
 try { const c = document.createElement('canvas'); if (!(c.getContext('webgl2') || c.getContext('webgl'))) throw 0; }
 catch (e) { $('#nowebgl').classList.remove('hidden'); $('#loader').classList.add('gone'); throw new Error('no webgl'); }
 
@@ -18,11 +17,14 @@ $('#formnote').textContent = FORM_NOTE;
 
 // ---- renderer / scene / camera ----
 const host = $('#webgl');
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile ? 1.5 : 2));
 renderer.setSize(innerWidth, innerHeight);
+renderer.setClearColor(0x000000, 0);                 // CSS gradient shows through
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
+renderer.toneMappingExposure = 1.12;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 host.appendChild(renderer.domElement);
 
 const labelRenderer = new CSS2DRenderer();
@@ -30,81 +32,76 @@ labelRenderer.setSize(innerWidth, innerHeight);
 $('#labels').appendChild(labelRenderer.domElement);
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x13130f);
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-scene.environmentIntensity = 0.55;     // soft IBL fill; key/rim define the edges
+scene.environmentIntensity = 0.5;
 
-const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 5000);
-camera.position.set(120, 90, 160);
+const camera = new THREE.PerspectiveCamera(36, innerWidth / innerHeight, 0.1, 6000);
+camera.position.set(150, 110, 200);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true; controls.dampingFactor = 0.08;
-controls.minDistance = 60; controls.maxDistance = 480;
+controls.enableDamping = true; controls.dampingFactor = 0.06;
+controls.enablePan = true; controls.screenSpacePanning = true;
+controls.rotateSpeed = 0.62; controls.zoomSpeed = 0.85; controls.panSpeed = 0.6;
+controls.minDistance = 45; controls.maxDistance = 760;
+controls.minPolarAngle = 0.12; controls.maxPolarAngle = Math.PI * 0.9;
 controls.target.set(0, 0, 0);
 
-const key = new THREE.DirectionalLight(0xfff1dd, 1.5); key.position.set(85, 130, 95); scene.add(key);
-const rim = new THREE.DirectionalLight(0x9fc0d8, 0.9); rim.position.set(-95, 55, -120); scene.add(rim);
-const fill = new THREE.DirectionalLight(0xfff4e6, 0.35); fill.position.set(-60, -20, 80); scene.add(fill);
-scene.add(new THREE.HemisphereLight(0xece8df, 0x14140f, 0.3));
+// ---- studio lighting: warm key (shadow) + cool rim + soft fill + IBL ----
+const key = new THREE.DirectionalLight(0xfff0db, 2.4);
+key.position.set(90, 150, 110); key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.6;
+Object.assign(key.shadow.camera, { near: 20, far: 700, left: -140, right: 140, top: 180, bottom: -180 });
+scene.add(key);
+const rim = new THREE.DirectionalLight(0xa9cbe6, 1.2); rim.position.set(-110, 70, -130); scene.add(rim);
+const fill = new THREE.DirectionalLight(0xfff4e6, 0.45); fill.position.set(-70, -10, 90); scene.add(fill);
+scene.add(new THREE.HemisphereLight(0xece8df, 0x14140f, 0.28));
 
-// ---- speckle: a faint procedural roughness noise → microfacet "printed nylon" read ----
+// ---- materials (matte PA12-CF with microfacet speckle) ----
 function speckleTex() {
   const s = 256, c = document.createElement('canvas'); c.width = c.height = s;
   const ctx = c.getContext('2d'), img = ctx.createImageData(s, s);
-  for (let i = 0; i < s * s; i++) { const v = 150 + Math.floor(Math.random() * 70); img.data[i*4]=img.data[i*4+1]=img.data[i*4+2]=v; img.data[i*4+3]=255; }
+  for (let i = 0; i < s * s; i++) { const v = 148 + Math.floor(Math.random() * 74); img.data[i*4]=img.data[i*4+1]=img.data[i*4+2]=v; img.data[i*4+3]=255; }
   ctx.putImageData(img, 0, 0);
-  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(8, 8); return t;
+  const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(7, 7); return t;
 }
 const speckle = speckleTex();
-const nylon = (color) => new THREE.MeshStandardMaterial({ color, metalness: 0.04, roughness: 0.68, roughnessMap: speckle });
-
-// ---- materials (Quiet Utility: stone core, amber cartridge; matte PA12-CF) ----
-const matStone = nylon(0x73716a);
-const matAmber = nylon(0xc6822f);
-const matEvo = nylon(0x8d8a80);
+const nylon = (color) => new THREE.MeshStandardMaterial({ color, metalness: 0.04, roughness: 0.66, roughnessMap: speckle });
 const MATS = {
-  screen:  new THREE.MeshStandardMaterial({ color: 0x111116, metalness: 0.1, roughness: 0.5 }),
-  pcb:     new THREE.MeshStandardMaterial({ color: 0x1f3a2b, metalness: 0.1, roughness: 0.62 }),
-  cell:    new THREE.MeshStandardMaterial({ color: 0x8e9296, metalness: 0.55, roughness: 0.42 }),
-  black:   new THREE.MeshStandardMaterial({ color: 0x141416, metalness: 0.2, roughness: 0.55 }),
-  gold:    new THREE.MeshStandardMaterial({ color: 0xd7a23a, metalness: 0.85, roughness: 0.32 }),
-  glass:   new THREE.MeshStandardMaterial({ color: 0x9fb6c4, metalness: 0.0, roughness: 0.12 }),
+  stone: nylon(0x77756d), amber: nylon(0xc6822f), evo: nylon(0x8d8a80),
+  screen: new THREE.MeshStandardMaterial({ color: 0x111116, metalness: 0.1, roughness: 0.5 }),
+  pcb: new THREE.MeshStandardMaterial({ color: 0x1f3a2b, metalness: 0.1, roughness: 0.6 }),
+  cell: new THREE.MeshStandardMaterial({ color: 0x8e9296, metalness: 0.55, roughness: 0.4 }),
+  black: new THREE.MeshStandardMaterial({ color: 0x141416, metalness: 0.25, roughness: 0.5 }),
+  gold: new THREE.MeshStandardMaterial({ color: 0xd7a23a, metalness: 0.88, roughness: 0.3 }),
+  glass: new THREE.MeshStandardMaterial({ color: 0x9fb6c4, metalness: 0, roughness: 0.1 }),
 };
 
 const loader = new GLTFLoader();
 const load = (url) => new Promise((res, rej) => loader.load(url, (g) => res(g.scene), undefined, rej));
-const CREASE = THREE.MathUtils.degToRad(34);   // smooth curved faces, keep edges >34° hard
+const CREASE = THREE.MathUtils.degToRad(34);
 function applyMat(obj, mat) {
   obj.traverse((o) => {
     if (o.isMesh) {
       try { o.geometry = toCreasedNormals(o.geometry, CREASE); } catch (e) { o.geometry.computeVertexNormals?.(); }
-      o.material = mat;
+      o.material = mat; o.castShadow = true; o.receiveShadow = true;
     }
   });
 }
 
-// ---- device group (explode + identify scenes) ----
-const ZUP = -Math.PI / 2;            // build123d Z-up -> three Y-up
+// ---- groups: device(rot Z-up→Y-up) → coreGroup + cartGroup ----
+const ZUP = -Math.PI / 2;
 const device = new THREE.Group(); device.rotation.x = ZUP; scene.add(device);
-let coreObj, cartObj;
-let explodeT = 0, explodeTarget = 0;     // 0..1
-let slideX = 0, slideTarget = 0;          // identify slide-on (part X)
-const markers = [];
-const explodables = [];                    // {obj, exZ} — fan out along mating axis (+Z part)
+const coreGroup = new THREE.Group(); const cartGroup = new THREE.Group();
+device.add(coreGroup, cartGroup);
 
-function addMarkers(parent, list, mat) {
-  list.forEach((p) => {
-    const el = document.createElement('div'); el.className = 'marker';
-    el.innerHTML = '<i></i>'; el.title = p.title;
-    el.addEventListener('click', (e) => { e.stopPropagation(); openCallout(p, el); });
-    const m = new CSS2DObject(el); m.position.set(...p.pos); m.visible = false;
-    parent.add(m); markers.push({ obj: m, el });
-  });
-}
+let explodeT = 0, explodeTarget = 0, slideP = 0, slideTarget = 0, scene_ = 'explode';
+const explodables = [];     // {obj, exZ}
+const leaders = [];         // {el, dotEl, line}
+let ground;
 
 function openCallout(p, el) {
-  markers.forEach((m) => m.el.classList.remove('active')); el.classList.add('active');
+  leaders.forEach((m) => m.el.classList.remove('active')); if (el) el.classList.add('active');
   const c = $('#callout'); c.classList.remove('hidden');
   const badge = p.kind === 'rep' ? '<span class="kind rep">representative</span>'
               : p.kind === 'designed' ? '<span class="kind des">designed</span>' : '';
@@ -112,28 +109,46 @@ function openCallout(p, el) {
   c.querySelector('.what').textContent = p.what;
   c.querySelector('.why').textContent = p.why;
 }
-$('#calloutClose').onclick = () => { $('#callout').classList.add('hidden'); markers.forEach((m) => m.el.classList.remove('active')); };
+$('#calloutClose').onclick = () => { $('#callout').classList.add('hidden'); leaders.forEach((m) => m.el.classList.remove('active')); };
+
+function addLeader(obj, comp) {
+  const a = comp.anchor, lx = comp.side > 0 ? (isMobile ? 40 : 54) : (isMobile ? -34 : -44);
+  const lead = [lx, a[1], a[2]];
+  const line = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(...a), new THREE.Vector3(...lead)]),
+    new THREE.LineBasicMaterial({ color: 0xd68a2e, transparent: true, opacity: 0.5 }));
+  obj.add(line);
+  const dotEl = document.createElement('div'); dotEl.className = 'leaddot';
+  const dot = new CSS2DObject(dotEl); dot.position.set(...a); obj.add(dot);
+  const el = document.createElement('div'); el.className = 'leadlabel';
+  el.innerHTML = `<span class="ll-name">${comp.title}</span>` +
+    (comp.kind ? `<span class="ll-kind ${comp.kind}">${comp.kind === 'rep' ? 'rep' : 'designed'}</span>` : '');
+  el.addEventListener('click', (e) => { e.stopPropagation(); openCallout(comp, el); });
+  const lbl = new CSS2DObject(el); lbl.position.set(...lead); obj.add(lbl);
+  leaders.push({ el, dotEl, line });
+}
 
 function frameCamera() {
+  explodables.forEach(({ obj }) => obj.position.set(0, 0, 0));
   const box = new THREE.Box3().setFromObject(device);
-  const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
-  device.position.sub(c); device.position.y += 0;        // recenter group
+  const c = box.getCenter(new THREE.Vector3());
+  device.position.sub(c);
+  // contact-shadow ground just under the assembled device
+  const b2 = new THREE.Box3().setFromObject(device);
+  ground = new THREE.Mesh(new THREE.PlaneGeometry(800, 800), new THREE.ShadowMaterial({ opacity: 0.34 }));
+  ground.rotation.x = -Math.PI / 2; ground.position.y = b2.min.y - 1; ground.receiveShadow = true;
+  scene.add(ground);
   controls.target.set(0, 0, 0);
 }
 
-// ---- evolution group ----
+// ---- evolution ----
 const evoGroup = new THREE.Group(); evoGroup.rotation.x = ZUP; scene.add(evoGroup); evoGroup.visible = false;
 const genMeshes = {}; let evoLoaded = false, curGen = 1, evoPlaying = false, evoTimer = 0;
-
 async function ensureEvolution() {
   if (evoLoaded) return; evoLoaded = true;
-  for (let i = 1; i <= 6; i++) {
-    const g = await load(`assets/models/gen${i}.glb`); applyMat(g, matEvo.clone());
-    g.visible = false; evoGroup.add(g); genMeshes[i] = g;
-  }
+  for (let i = 1; i <= 6; i++) { const g = await load(`assets/models/gen${i}.glb`); applyMat(g, MATS.evo.clone()); g.visible = false; evoGroup.add(g); genMeshes[i] = g; }
   const box = new THREE.Box3().setFromObject(genMeshes[6]); const c = box.getCenter(new THREE.Vector3());
-  evoGroup.children.forEach((ch) => ch.position.sub(c));
-  showGen(1);
+  evoGroup.children.forEach((ch) => ch.position.sub(c)); showGen(1);
 }
 function showGen(n) {
   curGen = n; for (let i = 1; i <= 6; i++) if (genMeshes[i]) genMeshes[i].visible = (i === n);
@@ -147,79 +162,66 @@ function showGen(n) {
   $('#genSlider').value = n;
 }
 
-// ---- identify scene DOM ----
+// ---- identify DOM ----
 $('#storySteps').innerHTML = STORY.map((s, i) =>
-  `<div class="story-step" data-i="${i}"><div class="story-k">${s.k}</div>
-     <div class="story-t">${s.t}</div><div class="story-d">${s.d}</div></div>`).join('');
-$('#frameStrip').innerHTML = FRAMES.map((f) =>
-  `<div class="frame"><img src="${f.src}" alt="${f.cap}" loading="lazy"/><span>${f.cap}</span></div>`).join('');
+  `<div class="story-step" data-i="${i}"><div class="story-k">${s.k}</div><div class="story-t">${s.t}</div><div class="story-d">${s.d}</div></div>`).join('');
+$('#frameStrip').innerHTML = FRAMES.map((f) => `<div class="frame"><img src="${f.src}" alt="${f.cap}" loading="lazy"/><span>${f.cap}</span></div>`).join('');
 
-// ---- scenes ----
-const camViews = {
-  explode: { pos: [168, 132, 230], tgt: [0, 6, 0] },
-  evolution: { pos: [70, 45, 90], tgt: [0, 0, 0] },
-  identify: { pos: [150, 70, 140], tgt: [0, 0, 0] },
+// ---- scene mgmt + camera fly (cancels on user interaction) ----
+const camViews = isMobile ? {
+  explode: { pos: [70, 150, 320], tgt: [-4, -14, 0] },     // model in the upper area, panel below
+  evolution: { pos: [55, 42, 122], tgt: [0, 0, 0] },
+  identify: { pos: [150, 72, 200], tgt: [0, -16, 0] },
+} : {
+  explode: { pos: [138, 168, 262], tgt: [-22, 2, 0] },
+  evolution: { pos: [70, 48, 92], tgt: [0, 0, 0] },
+  identify: { pos: [165, 78, 150], tgt: [0, -4, 0] },
 };
 let camTween = null;
-function flyTo(v) { camTween = { pos: new THREE.Vector3(...v.pos), tgt: new THREE.Vector3(...v.tgt), t: 0 }; }
+function flyTo(v) { camTween = { pos: new THREE.Vector3(...v.pos), tgt: new THREE.Vector3(...v.tgt) }; }
+controls.addEventListener('start', () => { camTween = null; });   // never fight the user
 
-let scene_ = 'explode';
+let storyStep = 0, storyTimer = 0;
+function highlightStory() { document.querySelectorAll('.story-step').forEach((s, i) => s.classList.toggle('on', i === storyStep)); }
+
 async function setScene(name) {
   scene_ = name;
   document.querySelectorAll('#scenenav button').forEach((b) => b.classList.toggle('active', b.dataset.scene === name));
   ['explode', 'evolution', 'identify'].forEach((s) => $(`#panel-${s}`).classList.toggle('hidden', s !== name));
   $('#callout').classList.add('hidden');
-  device.visible = (name !== 'evolution');
-  evoGroup.visible = (name === 'evolution');
-  markers.forEach((m) => { m.obj.visible = (name === 'explode'); });
+  device.visible = (name !== 'evolution'); evoGroup.visible = (name === 'evolution');
+  if (ground) ground.visible = (name !== 'evolution');
   if (name === 'evolution') await ensureEvolution();
-  explodeTarget = name === 'explode' ? (parseInt($('#explodeSlider').value) / 100) : (name === 'identify' ? 0 : explodeTarget);
-  if (name === 'identify') { slideTarget = 0; slideX = 1; runStory(); }  // start slid-out, animate in
+  explodeTarget = name === 'explode' ? (parseInt($('#explodeSlider').value) / 100) : 0;
+  if (name === 'identify') { slideTarget = 0; slideP = 1; storyStep = 0; storyTimer = 0; highlightStory(); }
   flyTo(camViews[name]);
 }
 document.querySelectorAll('#scenenav button').forEach((b) => b.addEventListener('click', () => setScene(b.dataset.scene)));
-
-// explode slider
 $('#explodeSlider').addEventListener('input', (e) => { explodeTarget = e.target.value / 100; });
-// evolution controls
 $('#genSlider').addEventListener('input', (e) => { evoPlaying = false; $('#genPlay').textContent = '▶ play'; showGen(+e.target.value); });
 $('#genPrev').onclick = () => showGen(Math.max(1, curGen - 1));
 $('#genNext').onclick = () => showGen(Math.min(6, curGen + 1));
 $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textContent = evoPlaying ? '❚❚ pause' : '▶ play'; evoTimer = 0; if (evoPlaying && curGen === 6) showGen(1); };
 
-// identify story stepping
-let storyStep = 0, storyTimer = 0;
-function runStory() { storyStep = 0; storyTimer = 0; highlightStory(); }
-function highlightStory() { document.querySelectorAll('.story-step').forEach((s, i) => s.classList.toggle('on', i === storyStep)); }
-
 // ---- boot ----
 (async function init() {
-  [coreObj, cartObj] = await Promise.all([load('assets/models/core.glb'), load('assets/models/cartridge.glb')]);
-  applyMat(coreObj, matStone); applyMat(cartObj, matAmber);
-  device.add(coreObj); device.add(cartObj);
-  explodables.push({ obj: coreObj, exZ: 0 }, { obj: cartObj, exZ: 70 });
-  addMarkers(coreObj, PARTS.core); addMarkers(cartObj, PARTS.cartridge);
-
-  // full-product breakdown: representative internals + the designed pogo pins
-  const inObjs = await Promise.all(INTERNALS.map((p) => load(`assets/models/${p.model}.glb`)));
-  INTERNALS.forEach((p, i) => {
-    const o = inObjs[i]; applyMat(o, MATS[p.mat] || matEvo);
-    device.add(o); explodables.push({ obj: o, exZ: p.exZ });
-    addMarkers(o, [p]);
-    if (p.id === 'display') {                       // a REAL Phase-5 frame on the screen face
+  const objs = await Promise.all(COMPONENTS.map((c) => load(`assets/models/${c.model}.glb`)));
+  COMPONENTS.forEach((comp, i) => {
+    const o = objs[i]; applyMat(o, MATS[comp.mat] || MATS.evo);
+    (comp.group === 'cart' ? cartGroup : coreGroup).add(o);
+    explodables.push({ obj: o, exZ: comp.exZ });
+    addLeader(o, comp);
+    if (comp.id === 'display') {                       // a REAL Phase-5 frame on the screen face
       const tex = new THREE.TextureLoader().load('assets/frames/sample_result.png');
       tex.colorSpace = THREE.SRGBColorSpace;
-      const plane = new THREE.Mesh(new THREE.PlaneGeometry(27, 32),
-        new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
-      plane.position.set(13, 2, -14.9); plane.rotation.y = Math.PI;   // face -Z (front)
-      o.add(plane);
+      const plane = new THREE.Mesh(new THREE.PlaneGeometry(27, 32), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
+      plane.position.set(13, 2, -14.9); plane.rotation.y = Math.PI; o.add(plane);
     }
   });
-
   frameCamera();
   $('#loader').classList.add('gone');
   setScene('explode');
-})().catch((e) => { console.error(e); $('#loader').innerHTML = 'Failed to load geometry. <br>Serve over http (not file://).'; });
+})().catch((e) => { console.error(e); $('#loader').innerHTML = 'Failed to load geometry.<br>Serve over http (not file://).'; });
 
 // ---- loop ----
 const clock = new THREE.Clock();
@@ -227,31 +229,31 @@ function animate() {
   requestAnimationFrame(animate);
   const dt = Math.min(clock.getDelta(), 0.05);
 
-  // explode + slide tweens (part +Z = mating axis; part +X = slide axis)
   explodeT += (explodeTarget - explodeT) * Math.min(1, dt * 6);
-  slideX += (slideTarget - slideX) * Math.min(1, dt * 3);
-  explodables.forEach(({ obj, exZ }) => { obj.position.z = exZ * explodeT; });  // fan along mating axis
-  if (cartObj) cartObj.position.x = (scene_ === 'identify') ? slideX * 46 : 0;  // slide-on in identify
-  markers.forEach((m) => m.el.style.opacity = (scene_ === 'explode') ? Math.min(1, explodeT * 2 + 0.15) : 0);
+  slideP += (slideTarget - slideP) * Math.min(1, dt * 1.25);
+  explodables.forEach(({ obj, exZ }) => { obj.position.z = exZ * explodeT; });
 
-  // evolution autoplay
-  if (scene_ === 'evolution' && evoPlaying) {
-    evoTimer += dt;
-    if (evoTimer > 1.7) { evoTimer = 0; if (curGen < 6) showGen(curGen + 1); else { evoPlaying = false; $('#genPlay').textContent = '▶ play'; } }
-  }
-  // identify story autostep
+  // identify: assemble the WHOLE cartridge group via hover-align → seat (no wall clipping)
   if (scene_ === 'identify') {
-    storyTimer += dt;
-    if (storyTimer > 2.6 && storyStep < STORY.length - 1) { storyTimer = 0; storyStep++; highlightStory(); }
-  }
+    const p = slideP;                       // 1 = apart, 0 = seated
+    const SPLIT = 0.32, LIFT = 26, SLIDE = 48;
+    const xo = p > SPLIT ? SLIDE * (p - SPLIT) / (1 - SPLIT) : 0;
+    const zo = p > SPLIT ? LIFT : LIFT * (p / SPLIT);
+    cartGroup.position.set(xo, 0, zo);
+  } else cartGroup.position.set(0, 0, 0);
 
-  // camera fly
+  // leader labels: fade in with explode, only in explode scene
+  const la = scene_ === 'explode' ? Math.min(1, Math.max(0, explodeT * 2.2 - 0.25)) : 0;
+  leaders.forEach((m) => { m.el.style.opacity = la; m.dotEl.style.opacity = la; m.line.material.opacity = la * 0.5; });
+  if (ground) ground.material.opacity = 0.34 * (1 - Math.min(1, explodeT * 1.4));
+
+  if (scene_ === 'evolution' && evoPlaying) { evoTimer += dt; if (evoTimer > 1.7) { evoTimer = 0; if (curGen < 6) showGen(curGen + 1); else { evoPlaying = false; $('#genPlay').textContent = '▶ play'; } } }
+  if (scene_ === 'identify') { storyTimer += dt; if (storyTimer > 2.6 && storyStep < STORY.length - 1) { storyTimer = 0; storyStep++; highlightStory(); } }
+
   if (camTween) {
-    camTween.t += dt * 1.4;
-    const k = Math.min(1, camTween.t); const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-    camera.position.lerp(camTween.pos, e * 0.12 + 0.02);
-    controls.target.lerp(camTween.tgt, 0.08);
-    if (k >= 1 && camera.position.distanceTo(camTween.pos) < 2) camTween = null;
+    camera.position.lerp(camTween.pos, 0.045);
+    controls.target.lerp(camTween.tgt, 0.045);
+    if (camera.position.distanceTo(camTween.pos) < 1.5) camTween = null;
   }
   controls.update();
   renderer.render(scene, camera);
