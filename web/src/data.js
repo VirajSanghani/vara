@@ -43,7 +43,7 @@ export const PARTS = {
 // exZ = fully-exploded offset along the mating axis, mat = material key.
 export const INTERNALS = [
   { id: 'display', model: 'display', pos: [13, 2, -14], exZ: -42, mat: 'screen', kind: 'rep',
-    title: '1.69″ display — 240×280',
+    title: '1.69″ display — 240×280', _s:1,
     what: 'Shows the live viewfinder and the result caption.',
     why: 'Representative body — a stand-in for the off-the-shelf panel. The frame on its face is a REAL Phase-5 render, not a mock-up.' },
   { id: 'pi', model: 'pi', pos: [13, 12, -6], exZ: -27, mat: 'pcb', kind: 'rep',
@@ -72,7 +72,53 @@ export const INTERNALS = [
     why: 'Representative chip; the ID scheme + pad layout are ours (connector-spec §4.1).' },
 ];
 
-// FULL TEARDOWN — every component, grouped core-side / cart-side, fanned on the mating axis.
+// DETAILED TEARDOWN v2 — full product: enclosure (front + back cover), glass, controls,
+// fasteners, cartridge + optics, and representative internals at real datasheet dims.
+// kind 'designed' = our geometry (exact dims); 'rep' = real-dimension stand-in (off-the-shelf,
+// never a routed PCB). exZ = explode offset (mating axis); side = leader label direction.
+export const SCREWS = [[-3.5, -39.5, 1.5], [29.5, -39.5, 1.5], [-3.5, 15.5, 1.5], [29.5, 15.5, 1.5]];
+export const PARTS_V2 = [
+  { id: 'glass', group: 'core', mat: 'glass', kind: 'designed', exZ: -54, side: 1, label: true,
+    anchor: [13, 9, -16], title: 'Glass screen cover',
+    what: 'Tinted cover over the 1.69″ display.', why: 'Designed glass — the screen reads through it.' },
+  { id: 'display', group: 'core', mat: 'screen', kind: 'rep', exZ: -38, side: 1, label: true,
+    anchor: [13, 11, -13.6], title: '1.69″ display — 240×280', _s:1,
+    what: 'Live viewfinder + result caption.', why: 'Representative panel at real module dims. The frame on it is a REAL Phase-5 render.' },
+  { id: 'camera', group: 'core', mat: 'black', kind: 'rep', exZ: -18, side: 1, label: true,
+    anchor: [15, 7, 1], title: 'Camera + CSI',
+    what: 'Fixed in the core; looks out the optical bore.', why: 'Representative module (real dims), on the CSI ribbon — not the pogo.' },
+  { id: 'pi', group: 'core', mat: 'pcb', kind: 'rep', exZ: -56, side: -1, label: true,
+    anchor: [13, 17, -6], title: 'Raspberry Pi Zero 2 W',
+    what: 'The brain: capture → cloud vision → display + speak.', why: 'Representative at real dims (65×30, holes 58×23) — not a PCB we routed (Phase 4).' },
+  { id: 'battery', group: 'core', mat: 'cell', kind: 'rep', exZ: -72, side: -1, label: true,
+    anchor: [13, -28, -6], title: 'Li-po — 1500 mAh',
+    what: 'Powers the device; runtime ≈ 3.5 h (estimate).', why: 'Representative cell at real dimensions.' },
+  { id: 'core_front', group: 'core', mat: 'stone', kind: 'designed', exZ: 0, side: 1, label: true,
+    anchor: [25, -12, -9], title: 'Core — front housing',
+    what: 'Holds the screen, electronics and controls.', why: 'Designed enclosure: screen bezel, USB-C, jog-wheel pocket, speaker grille, screw bosses. 44×64×20 mm.' },
+  { id: 'wheel', group: 'core', mat: 'metalA', kind: 'designed', exZ: 0, side: 0, label: false, anchor: [37, -26, -7] },
+  { id: 'button', group: 'core', mat: 'metalA', kind: 'designed', exZ: 0, side: 0, label: false, anchor: [37, 8, -7] },
+  { id: 'pogo', group: 'core', mat: 'gold', kind: 'designed', exZ: 18, side: -1, label: true,
+    anchor: [6, 7, 7], title: 'Pogo pins ×6',
+    what: 'Spring contacts: V+, GND, I²C SDA/SCL, CD#, INT.', why: 'DESIGNED — the real contract contacts (connector-spec v0.2).' },
+  { id: 'core_back', group: 'core', mat: 'stone', kind: 'designed', exZ: 40, side: -1, label: true,
+    anchor: [29, 16, 3], title: 'Back cover',
+    what: 'Carries the female rail socket + optical bore.', why: 'Designed cover, fixed by 4× M2.5 screws; “VARA” debossed on the back.' },
+  { id: 'eeprom', group: 'cart', mat: 'chip', kind: 'rep', exZ: 52, side: -1, label: true,
+    anchor: [22, 0, 5], title: 'ID EEPROM @ 0x50',
+    what: 'Tells the core which cartridge is mounted.', why: 'Representative chip; the ID scheme + pads are ours.' },
+  { id: 'cartridge', group: 'cart', mat: 'amber', kind: 'designed', exZ: 70, side: -1, label: true,
+    anchor: [9, 13, 9], title: 'Vision cartridge',
+    what: 'Re-aims perception — a macro lens on the core’s eye.', why: 'Optics only; the camera stays in the core. Male rail resolved over 6 generations (Connector).' },
+  { id: 'ledring', group: 'cart', mat: 'pcb', kind: 'rep', exZ: 88, side: 1, label: true,
+    anchor: [15, 8, 8], title: 'LED ring (optional)',
+    what: 'Ring light around the lens.', why: 'Representative; runs on the switched V+ rail, ≤150 mA.' },
+  { id: 'lensring', group: 'cart', mat: 'metalA', kind: 'designed', exZ: 102, side: -1, label: true,
+    anchor: [15, 0, 18], title: 'Lens retaining ring',
+    what: 'Holds the macro optics in the barrel.', why: 'Designed knurled ring; the optics it retains are representative.' },
+];
+
+// (legacy single-shell teardown kept for reference) — full teardown, grouped core/cart.
 // exZ = explode offset (part +Z → world up). side = which way the leader label points.
 // kind 'designed' = real geometry we authored; 'rep' = dimensional stand-in (off-the-shelf,
 // not fabricated by us, never a routed PCB). anchor = a point on the part (part mm).
@@ -103,7 +149,7 @@ export const COMPONENTS = [
     what: 'Fixed in the core; looks out the optical bore.',
     why: 'Representative module, on the CSI ribbon — NOT the pogo (CSI is far too fast for the 6-pin contract).' },
   { id: 'display', model: 'display', group: 'core', mat: 'screen', kind: 'rep', exZ: -40, side: 1,
-    anchor: [13, 11, -14], title: '1.69″ display — 240×280',
+    anchor: [13, 11, -14], title: '1.69″ display — 240×280', _s:1,
     what: 'Live viewfinder + result caption.',
     why: 'Representative body. The frame on its face is a REAL Phase-5 render, not a mock-up.' },
   { id: 'pi', model: 'pi', group: 'core', mat: 'pcb', kind: 'rep', exZ: -58, side: -1,
