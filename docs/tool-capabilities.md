@@ -215,3 +215,17 @@ robotics lab; the floor is honest and complete on its own.
 the user to start Blender when we get there (with a no-Blender fallback). Electronics is
 the constrained layer — plan for an excellent *documented* electrical design, and treat a
 real KiCad project as a stretch contingent on the user installing KiCad.
+
+---
+
+## Addendum — 2026-06-03 (Phase 1 review)
+
+**KiCad decision reversed by the user:** KiCad **will be installed**. Phase 4 target is
+therefore upgraded from the documented-schematic *floor* to the *stretch* path:
+**schematic + footprints + BOM** as openable `.kicad_sch` / `.kicad_pcb`, validated and
+exported via `kicad-cli` (ERC, netlist, BOM, PDF). Full routing remains optional. It is
+still a **design, not a verified/fabricated board** — honesty rule #1 stands.
+
+Action when entering Phase 4: confirm `kicad-cli` is on PATH (`kicad-cli version`), then
+re-probe the actual schematic→footprint→BOM→export chain and record the real ceiling here
+before committing Phase-4 scope.
