@@ -1,0 +1,24 @@
+# secrets — never commit (Plan honesty rule, Risk table)
+.env
+.env.*
+*.key
+secrets/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# os / editor
+.DS_Store
+*.swp
+
+# build / export scratch (keep curated artifacts; ignore loose scratch dirs)
+/tmp/
+*.log
+
+# heavy intermediates — commit curated finals, not scratch renders
+anim/_scratch/
+web/node_modules/
+web/dist/
