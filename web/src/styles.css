@@ -86,6 +86,10 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
   box-shadow:0 18px 60px rgba(0,0,0,.5);transition:.25s}
 #callout.hidden{opacity:0;transform:translateY(-50%) translateX(14px);pointer-events:none}
 #callout h3{font-family:var(--serif);font-weight:600;font-size:18px;margin-bottom:12px;padding-right:18px}
+.kind{font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  vertical-align:middle;margin-left:8px;padding:3px 7px;border-radius:2px}
+.kind.rep{color:var(--mute);border:1px solid var(--stone-3);background:var(--stone-2)}
+.kind.des{color:var(--stone-0);background:var(--amber)}
 #callout .what{font-size:13px;line-height:1.55;margin-bottom:12px}
 #callout .why{font-size:12px;line-height:1.6;color:var(--mute);border-left:2px solid var(--amber);padding-left:12px}
 #callout .why::before{content:'WHY ';color:var(--amber);font-size:10px;letter-spacing:.1em}

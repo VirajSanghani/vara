@@ -37,6 +37,41 @@ export const PARTS = {
   ],
 };
 
+// Full-product breakdown — internal components, exploded on the mating axis (part +Z).
+// kind:'designed' = real geometry we authored; kind:'rep' = dimensional stand-in for an
+// off-the-shelf part (NOT fabricated by us, NOT a routed PCB). pos = marker anchor (part mm),
+// exZ = fully-exploded offset along the mating axis, mat = material key.
+export const INTERNALS = [
+  { id: 'display', model: 'display', pos: [13, 2, -14], exZ: -42, mat: 'screen', kind: 'rep',
+    title: '1.69″ display — 240×280',
+    what: 'Shows the live viewfinder and the result caption.',
+    why: 'Representative body — a stand-in for the off-the-shelf panel. The frame on its face is a REAL Phase-5 render, not a mock-up.' },
+  { id: 'pi', model: 'pi', pos: [13, 12, -6], exZ: -27, mat: 'pcb', kind: 'rep',
+    title: 'Raspberry Pi Zero 2 W',
+    what: 'The brain: capture → cloud vision → display + speak.',
+    why: 'Representative body — the real module, not a PCB we laid out. KiCad here couldn’t route a board (Phase 4), so we never imply one.' },
+  { id: 'battery', model: 'battery', pos: [13, -26, -6], exZ: -56, mat: 'cell', kind: 'rep',
+    title: 'Li-po — 1500 mAh',
+    what: 'Powers the device; runtime ≈ 3.5 h (estimate).',
+    why: 'Representative pouch — a dimensional stand-in for an off-the-shelf cell.' },
+  { id: 'camera', model: 'camera', pos: [15, 0, -1], exZ: -13, mat: 'black', kind: 'rep',
+    title: 'Camera module + CSI',
+    what: 'Fixed in the core; looks out the optical bore.',
+    why: 'Representative module. Carried on the CSI ribbon (NOT the pogo) — CSI is far too fast for the 6-pin contract.' },
+  { id: 'pogo', model: 'pogo', pos: [6, 0, 7], exZ: 14, mat: 'gold', kind: 'designed',
+    title: 'Pogo pins ×6',
+    what: 'Spring contacts carrying V+, GND, I²C SDA/SCL, CD#, INT.',
+    why: 'DESIGNED by us — the real contract geometry (connector-spec v0.2), not a bought part.' },
+  { id: 'optics', model: 'optics', pos: [15, 0, 11], exZ: 78, mat: 'glass', kind: 'rep',
+    title: 'Macro-lens optics',
+    what: 'Lens elements inside the cartridge barrel.',
+    why: 'Representative — the barrel that holds and aligns them IS our designed geometry.' },
+  { id: 'eeprom', model: 'eeprom', pos: [22, 0, 5], exZ: 62, mat: 'black', kind: 'rep',
+    title: 'ID EEPROM @ 0x50',
+    what: 'Tells the core which cartridge is mounted.',
+    why: 'Representative chip; the ID scheme + pad layout are ours (connector-spec §4.1).' },
+];
+
 export const FORM_NOTE =
   'VARA is 44 × 64 × 20 mm — chunky by consequence, not by style: the 35.6 mm dovetail rail span ' +
   'plus the display set the size. An honest instrument, not a phone pretending to be thin.';
