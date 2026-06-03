@@ -200,8 +200,9 @@ export const COMPONENTS = [
 ];
 
 export const FORM_NOTE =
-  'VARA is 46 × 86 × 22 mm — chunky by consequence, not by style: the 35.6 mm dovetail rail span ' +
-  'plus the display set the size. An honest instrument, not a phone pretending to be thin.';
+  'VARA is 46 × 86 × 22 mm — sized to actually fit the Pi Zero 2 W (65 mm) and the Li-po behind ' +
+  'the 1.69″ screen, with the dovetail rail span setting the width. Three printed parts: a ' +
+  'two-shell core (front housing + back cover) and the cartridge. An honest instrument.';
 
 // CONNECTOR EVOLUTION — the 6 generations with real analytical numbers (dovetail-study.md).
 export const GENS = [

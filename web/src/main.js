@@ -36,7 +36,7 @@ $('#labels').appendChild(labelRenderer.domElement);
 const scene = new THREE.Scene();
 const pmrem = new THREE.PMREMGenerator(renderer);
 scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-scene.environmentIntensity = 0.55;
+scene.environmentIntensity = 0.72;
 
 const camera = new THREE.PerspectiveCamera(36, innerWidth / innerHeight, 0.1, 6000);
 camera.position.set(150, 110, 200);
@@ -44,17 +44,18 @@ camera.position.set(150, 110, 200);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true; controls.dampingFactor = 0.06; controls.enablePan = true;
 controls.screenSpacePanning = true; controls.rotateSpeed = 0.62; controls.zoomSpeed = 0.85;
-controls.minDistance = 42; controls.maxDistance = 780;
-controls.minPolarAngle = 0.12; controls.maxPolarAngle = Math.PI * 0.9;
+controls.minDistance = 42; controls.maxDistance = 820;
+controls.minPolarAngle = 0.02; controls.maxPolarAngle = Math.PI * 0.985;   // allow viewing the underside
 
 // ---- lighting ----
-const key = new THREE.DirectionalLight(0xfff0db, 2.3); key.position.set(95, 155, 115); key.castShadow = true;
+const key = new THREE.DirectionalLight(0xfff0db, 1.9); key.position.set(95, 155, 115); key.castShadow = true;
 key.shadow.mapSize.set(2048, 2048); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.7;
 Object.assign(key.shadow.camera, { near: 20, far: 760, left: -150, right: 150, top: 200, bottom: -200 });
 scene.add(key);
-const rim = new THREE.DirectionalLight(0xaccde8, 1.25); rim.position.set(-115, 75, -135); scene.add(rim);
-const fill = new THREE.DirectionalLight(0xfff4e6, 0.4); fill.position.set(-70, -10, 95); scene.add(fill);
-scene.add(new THREE.HemisphereLight(0xece8df, 0x14140f, 0.26));
+const rim = new THREE.DirectionalLight(0xaccde8, 1.1); rim.position.set(-115, 75, -135); scene.add(rim);
+const under = new THREE.DirectionalLight(0xdfe6f0, 0.6); under.position.set(-30, -150, -40); scene.add(under); // lifts the underside
+scene.add(new THREE.HemisphereLight(0xf2eee4, 0x45453d, 0.55));                                                // brighter ambient floor
+const head = new THREE.DirectionalLight(0xffffff, 0.5); scene.add(head); scene.add(head.target);              // camera-following headlight
 
 // ---- procedural textures ----
 function noiseTex(rep, lo, hi) {
@@ -171,6 +172,13 @@ let camTween = null;
 function flyTo(v) { camTween = { pos: new THREE.Vector3(...v.pos), tgt: new THREE.Vector3(...v.tgt) }; }
 controls.addEventListener('start', () => { camTween = null; });
 
+// view presets (device centred at origin; back/cartridge faces +Y, screen faces −Y)
+const VIEWS = {
+  iso: { pos: [205, 175, 280], tgt: [0, 0, 0] }, screen: { pos: [0, -330, 60], tgt: [0, 0, 0] },
+  back: { pos: [0, 330, 60], tgt: [0, 0, 0] }, side: { pos: [340, 60, 40], tgt: [0, 0, 0] },
+};
+document.querySelectorAll('#viewnav button').forEach((b) => b.addEventListener('click', () => flyTo(VIEWS[b.dataset.view])));
+
 let storyStep = 0, storyTimer = 0;
 function highlightStory() { document.querySelectorAll('.story-step').forEach((s, i) => s.classList.toggle('on', i === storyStep)); }
 
@@ -180,6 +188,7 @@ async function setScene(name) {
   ['explode', 'evolution', 'identify'].forEach((s) => $(`#panel-${s}`).classList.toggle('hidden', s !== name));
   $('#callout').classList.add('hidden');
   device.visible = (name !== 'evolution'); evoGroup.visible = (name === 'evolution'); if (ground) ground.visible = (name !== 'evolution');
+  $('#viewnav').classList.toggle('hidden', name === 'evolution');
   if (name === 'evolution') await ensureEvolution();
   explodeTarget = name === 'explode' ? (parseInt($('#explodeSlider').value) / 100) : 0;
   if (name === 'identify') { slideTarget = 0; slideP = 1; storyStep = 0; storyTimer = 0; highlightStory(); }
@@ -198,7 +207,7 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
   PARTS_V3.forEach((comp, i) => {
     const o = objs[i]; applyMat(o, MATS[comp.mat] || MATS.evo);
     (comp.group === 'cart' ? cartGroup : coreGroup).add(o);
-    explodables.push({ obj: o, exZ: comp.exZ });
+    explodables.push({ obj: o, exZ: comp.exZ, base: o.position.clone() });
     if (comp.label) addLeader(o, comp);
     if (comp.id === 'display') {
       const tex = new THREE.TextureLoader().load('assets/frames/sample_result.png'); tex.colorSpace = THREE.SRGBColorSpace;
@@ -209,11 +218,11 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
   // case screws (back cover → front bosses) + Pi-mount screws — each in its real hole
   const sc = await load('assets/models/screw.glb'); applyMat(sc, MATS.metalS);
   SCREWS.forEach((p, i) => {
-    const s = sc.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 56 });
+    const s = sc.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 56, base: s.position.clone() });
     if (i === 0) addLeader(s, { anchor: [0, 0, 1.5], side: 1, kind: 'designed', title: 'M2.5 screws ×4', what: 'Fix the back cover to the front housing.', why: 'DESIGNED fasteners — socket-head cap screws, ISO 4762 dimensions. Each seats in a cover counterbore and threads into a front-housing boss.' });
   });
   const scp = await load('assets/models/screw_pi.glb'); applyMat(scp, MATS.metalS);
-  SCREWS_PI.forEach((p) => { const s = scp.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: -46 }); });
+  SCREWS_PI.forEach((p) => { const s = scp.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: -46, base: s.position.clone() }); });
   frameCamera(); $('#loader').classList.add('gone'); setScene('explode');
 })().catch((e) => { console.error(e); $('#loader').innerHTML = 'Failed to load geometry.<br>Serve over http (not file://).'; });
 
@@ -232,7 +241,7 @@ function animate() {
   const dt = Math.min(clock.getDelta(), 0.05);
   explodeT += (explodeTarget - explodeT) * Math.min(1, dt * 6);
   slideP += (slideTarget - slideP) * Math.min(1, dt * 1.25);
-  explodables.forEach(({ obj, exZ }) => { obj.position.z = exZ * explodeT; });
+  explodables.forEach(({ obj, exZ, base }) => { obj.position.z = base.z + exZ * explodeT; });
   if (scene_ === 'identify') {
     // clean straight slide-in along the OPEN dovetail channel (no lift, no wall clipping)
     cartGroup.position.set(slideP * 52, 0, 0);
@@ -244,6 +253,7 @@ function animate() {
   if (scene_ === 'identify') { storyTimer += dt; if (storyTimer > 2.6 && storyStep < STORY.length - 1) { storyTimer = 0; storyStep++; highlightStory(); } }
   if (camTween) { camera.position.lerp(camTween.pos, 0.045); controls.target.lerp(camTween.tgt, 0.045); if (camera.position.distanceTo(camTween.pos) < 1.5) camTween = null; }
   controls.update();
+  head.position.copy(camera.position); head.target.position.copy(controls.target); // headlight tracks view
   composer.render();
   labelRenderer.render(scene, camera);
 }

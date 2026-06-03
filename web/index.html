@@ -38,7 +38,7 @@
   <!-- per-scene panels -->
   <section id="panel-explode" class="panel">
     <h1>The device, taken apart.</h1>
-    <p class="lede">Two printed parts — a core that perceives and a cartridge that re-aims that perception. Tap a marker for what each feature does <em>and why it’s shaped that way.</em></p>
+    <p class="lede">A two-shell core that perceives, plus a cartridge that re-aims that perception. Drag to orbit; use <em>view</em> presets to change angle. Tap a marker for what each part does <em>and why it’s shaped that way.</em></p>
     <p class="formnote" id="formnote"></p>
     <div class="controls"><label><input type="range" id="explodeSlider" min="0" max="100" value="0" /> explode</label></div>
   </section>
@@ -63,6 +63,14 @@
 
   <!-- callout detail popover -->
   <aside id="callout" class="hidden"><button id="calloutClose">×</button><h3></h3><p class="what"></p><p class="why"></p></aside>
+
+  <div id="viewnav" title="change view">
+    <span class="vlabel">view</span>
+    <button data-view="iso">iso</button>
+    <button data-view="screen">screen</button>
+    <button data-view="back">back</button>
+    <button data-view="side">side</button>
+  </div>
 
   <footer id="honesty"></footer>
   <div id="loader"><div class="spin"></div><span>loading real geometry…</span></div>
