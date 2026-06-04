@@ -96,14 +96,46 @@ for key, m in MAT.items():
         mat.extensions = ext
     gltf.materials.append(mat); mat_idx[key] = len(gltf.materials) - 1
 
+def creased_normals(V, F, deg=35.0):
+    """Angle-based creased normals (the toCreasedNormals equivalent): curved faces shade
+    smooth, hard edges stay crisp. Returns NON-INDEXED (pos, normal, idx)."""
+    tri = V[F]                                              # M,3,3
+    fn = np.cross(tri[:, 1] - tri[:, 0], tri[:, 2] - tri[:, 0])
+    fn /= (np.linalg.norm(fn, axis=1, keepdims=True) + 1e-12)
+    cos_t = math.cos(math.radians(deg))
+    M = len(F)
+    v2f = [[] for _ in range(len(V))]                       # vertex → face indices
+    for fi, (a, b, c) in enumerate(F):
+        v2f[a].append(fi); v2f[b].append(fi); v2f[c].append(fi)
+    pos = np.empty((M * 3, 3), np.float32)
+    nrm = np.empty((M * 3, 3), np.float32)
+    for fi in range(M):
+        nf = fn[fi]
+        for k in range(3):
+            vi = F[fi, k]
+            nbr = v2f[vi]
+            normals = fn[nbr]
+            keep = normals @ nf >= cos_t                    # only smooth-group neighbours
+            acc = normals[keep].sum(0)
+            ln = np.linalg.norm(acc)
+            pos[fi * 3 + k] = V[vi]
+            nrm[fi * 3 + k] = (acc / ln) if ln > 1e-9 else nf
+    # re-weld identical (position, normal) pairs → keeps the crisp shading, cuts size
+    key = np.concatenate([np.round(pos, 4), np.round(nrm, 4)], axis=1)
+    uniq, inv = np.unique(key, axis=0, return_inverse=True)
+    up = uniq[:, :3].astype(np.float32)
+    un = uniq[:, 3:6].astype(np.float32)
+    un /= (np.linalg.norm(un, axis=1, keepdims=True) + 1e-12)
+    return up, un, inv.astype(np.uint32).reshape(-1)
+
 geom_cache = {}
 def load_geom(fname):
     if fname in geom_cache: return geom_cache[fname]
     m = trimesh.load(os.path.join(MODELS, fname + ".glb"), force="mesh")
-    v = np.asarray(m.vertices, dtype=np.float32)
-    n = np.asarray(m.vertex_normals, dtype=np.float32)
-    f = np.asarray(m.faces, dtype=np.uint32).reshape(-1)
-    geom_cache[fname] = (v, n, f); return geom_cache[fname]
+    V = np.asarray(m.vertices, dtype=np.float64)
+    F = np.asarray(m.faces, dtype=np.int64)
+    v, n, f = creased_normals(V, F, 35.0)
+    geom_cache[fname] = (v.astype(np.float32), n.astype(np.float32), f); return geom_cache[fname]
 
 device_children = []
 for label, fname, exZ, base, matkey in PARTS:
