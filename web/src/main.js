@@ -166,7 +166,7 @@ $('#frameStrip').innerHTML = FRAMES.map((f) => `<div class="frame"><img src="${f
 const camViews = isMobile ? {
   explode: { pos: [80, 175, 360], tgt: [-4, 0, 0] }, evolution: { pos: [55, 42, 122], tgt: [0, 0, 0] }, identify: { pos: [165, 70, 215], tgt: [0, -10, 0] },
 } : {
-  explode: { pos: [165, 205, 320], tgt: [-28, 6, 0] }, evolution: { pos: [70, 48, 92], tgt: [0, 0, 0] }, identify: { pos: [185, 80, 165], tgt: [0, -8, 0] },
+  explode: { pos: [175, 215, 340], tgt: [-28, 4, 0] }, evolution: { pos: [70, 48, 92], tgt: [0, 0, 0] }, identify: { pos: [185, 80, 165], tgt: [0, -8, 0] },
 };
 let camTween = null;
 function flyTo(v) { camTween = { pos: new THREE.Vector3(...v.pos), tgt: new THREE.Vector3(...v.tgt) }; }
@@ -218,11 +218,11 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
   // case screws (back cover → front bosses) + Pi-mount screws — each in its real hole
   const sc = await load('assets/models/screw.glb'); applyMat(sc, MATS.metalS);
   SCREWS.forEach((p, i) => {
-    const s = sc.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 56, base: s.position.clone() });
+    const s = sc.clone(); s.name = 'screw_case'; s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 14, base: s.position.clone() });
     if (i === 0) addLeader(s, { anchor: [0, 0, 1.5], side: 1, kind: 'designed', title: 'M2.5 screws ×4', what: 'Fix the back cover to the front housing.', why: 'DESIGNED fasteners — socket-head cap screws, ISO 4762 dimensions. Each seats in a cover counterbore and threads into a front-housing boss.' });
   });
   const scp = await load('assets/models/screw_pi.glb'); applyMat(scp, MATS.metalS);
-  SCREWS_PI.forEach((p) => { const s = scp.clone(); s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: -46, base: s.position.clone() }); });
+  SCREWS_PI.forEach((p) => { const s = scp.clone(); s.name = 'screw_pi'; s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: -54, base: s.position.clone() }); });
   frameCamera(); $('#loader').classList.add('gone'); setScene('explode');
 })().catch((e) => { console.error(e); $('#loader').innerHTML = 'Failed to load geometry.<br>Serve over http (not file://).'; });
 
