@@ -86,7 +86,7 @@ save(core_front(), "core_front", 0.04)
 def core_back():
     c = Pos(CX, (Y0+Y1)/2, (ZSPLIT+ZB)/2) * Box(X1-X0, Y1-Y0, ZB-ZSPLIT)
     c = fil(c, c.edges().filter_by(Axis.Z), CR)
-    c = c - open_socket_cut() + detent_add(CONN)               # OPEN dovetail channel
+    c = c - socket_cut(CONN) + detent_add(CONN)                # closed socket — cover fully wraps the rails (clean)
     c = c - (Pos(15, 0, 1) * Cylinder(14/2, 9))                # optical bore Ø14
     for sx, sy in CASE:                                        # head counterbore + clearance
         c = c - (Pos(sx, sy, ZB-1.3) * Cylinder(4.9/2, 2.8))
@@ -109,10 +109,11 @@ save(Pos(X1+0.4, -16, -9) * Rot(0,90,0) * Cylinder(1.7, 1.6), "button", 0.04)
 
 # ───── cartridge (slides clean through the open channel) ─────
 def cartridge():
-    z0, z1 = H, H+3.0
+    z0, z1 = H, H+3.2
     body = male_rails(CONN)
-    plate = Pos(15, 0, (z0+z1)/2) * Box(30, 2*17.8, 3.0)        # body covers the lead-in slot
-    plate = fil(plate, plate.edges().filter_by(Axis.Z), 2.5)
+    # flange: overhangs the whole socket opening so the rails + channel are hidden when seated
+    plate = Pos(16, 0, (z0+z1)/2) * Box(38, 41, z1-z0)          # X−3..35, Y±20.5
+    plate = fil(plate, plate.edges().filter_by(Axis.Z), 3.0)
     body = body + plate
     # weld risers fuse rails→plate: narrow (≤ mouth width) so the part below Z=H stays
     # INSIDE the male rail (within groove clearance), never poking into the cover lips.
@@ -152,7 +153,7 @@ save(pi(), "pi", 0.05)
 def carrier():
     """Custom main PCB (representative): USB-C, IP5306 PMIC, MAX98357A amp, caps, display FPC conn."""
     bz=-6.5
-    pcb=Pos(13,-40,bz)*Box(40,40,1.2)
+    pcb=Pos(13,-40,bz)*Box(36,40,1.2)                                # fits clearly inside the walls
     usbc=Pos(13,Y0+2.5,bz+1.6)*Box(9.0,3.3,3.2)                      # USB-C at bottom edge
     pmic=Pos(4,-46,bz+1.2)*Box(5,4,1.2)
     amp =Pos(22,-46,bz+1.2)*Box(3,3,1.0)
@@ -166,9 +167,9 @@ def battery():
     tab=Pos(13,-38+24+1.5,-2.5)*Box(8,3,1)
     return Compound(children=[cell,tab])
 save(battery(), "battery", 0.05)
-def camera():
-    board=Pos(15,0,-1.5)*Box(25,24,1.0); hous=Pos(15,0,0.6)*Box(8.5,8.5,4.5)
-    lens=Pos(15,0,3.2)*Cylinder(3.6,2.2); csi=Pos(15,-15,-1.5)*Box(6,12,0.4)
+def camera():  # lowered so the lens looks THROUGH the bore but never pokes past the cover
+    board=Pos(15,0,-2.8)*Box(25,24,1.0); hous=Pos(15,0,-0.7)*Box(8.5,8.5,4.5)
+    lens=Pos(15,0,1.9)*Cylinder(3.6,2.2); csi=Pos(15,-15,-2.8)*Box(6,12,0.4)
     return Compound(children=[board,hous,lens,csi])
 save(camera(), "camera", 0.04)
 def encoder():

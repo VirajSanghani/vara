@@ -205,7 +205,7 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
 (async function init() {
   const objs = await Promise.all(PARTS_V3.map((c) => load(`assets/models/${c.id}.glb`)));
   PARTS_V3.forEach((comp, i) => {
-    const o = objs[i]; applyMat(o, MATS[comp.mat] || MATS.evo);
+    const o = objs[i]; o.name = comp.id; applyMat(o, MATS[comp.mat] || MATS.evo);
     (comp.group === 'cart' ? cartGroup : coreGroup).add(o);
     explodables.push({ obj: o, exZ: comp.exZ, base: o.position.clone() });
     if (comp.label) addLeader(o, comp);
@@ -218,7 +218,7 @@ $('#genPlay').onclick = () => { evoPlaying = !evoPlaying; $('#genPlay').textCont
   // case screws (back cover → front bosses) + Pi-mount screws — each in its real hole
   const sc = await load('assets/models/screw.glb'); applyMat(sc, MATS.metalS);
   SCREWS.forEach((p, i) => {
-    const s = sc.clone(); s.name = 'screw_case'; s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 14, base: s.position.clone() });
+    const s = sc.clone(); s.name = 'screw_case'; s.position.set(...p); coreGroup.add(s); explodables.push({ obj: s, exZ: 32, base: s.position.clone() });
     if (i === 0) addLeader(s, { anchor: [0, 0, 1.5], side: 1, kind: 'designed', title: 'M2.5 screws ×4', what: 'Fix the back cover to the front housing.', why: 'DESIGNED fasteners — socket-head cap screws, ISO 4762 dimensions. Each seats in a cover counterbore and threads into a front-housing boss.' });
   });
   const scp = await load('assets/models/screw_pi.glb'); applyMat(scp, MATS.metalS);
@@ -243,8 +243,9 @@ function animate() {
   slideP += (slideTarget - slideP) * Math.min(1, dt * 1.25);
   explodables.forEach(({ obj, exZ, base }) => { obj.position.z = base.z + exZ * explodeT; });
   if (scene_ === 'identify') {
-    // clean straight slide-in along the OPEN dovetail channel (no lift, no wall clipping)
-    cartGroup.position.set(slideP * 52, 0, 0);
+    // hover-align then seat: lift clear, translate over the socket, descend in — no wall clipping
+    const p = slideP, SPLIT = 0.34, LIFT = 30, SLIDE = 50;
+    cartGroup.position.set(p > SPLIT ? SLIDE * (p - SPLIT) / (1 - SPLIT) : 0, 0, p > SPLIT ? LIFT : LIFT * (p / SPLIT));
   } else cartGroup.position.set(0, 0, 0);
   const la = scene_ === 'explode' ? Math.min(1, Math.max(0, explodeT * 2.2 - 0.25)) : 0;
   leaders.forEach((m) => { m.el.style.opacity = la; m.dotEl.style.opacity = la; if (m.line) m.line.material.opacity = la * 0.5; });
