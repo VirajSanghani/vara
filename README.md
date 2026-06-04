@@ -13,6 +13,24 @@ loop): run `web/` locally — see [Run the showcase](#run-the-showcase-locally).
 
 ---
 
+## See it move
+
+The whole assembly, every part flying from exploded to seated and back — on a loop. This is
+rendered straight from the CAD: a single animated glTF (enclosure, the optimized dovetail
+connector, M2.5 screws, and the representative internals) played in `<model-viewer>`.
+
+![VARA — the full device assembling, on a loop](docs/img/assembly.gif)
+
+Held open, the same geometry is a clean teardown — every part on its own axis, in seating order:
+
+![VARA — exploded teardown](docs/img/exploded.jpg)
+
+*Both come from the real Phase-6 part models with creased-normal shading and a studio HDR
+environment — the standalone animation lives in [`web/assembly/`](web/assembly/); the fully
+interactive, labelled version (tap any part for what it does **and why**) is in [`web/`](web/).*
+
+---
+
 ## Read this first — what VARA is, and isn't
 
 VARA is **one complete, honest engineering pass** — hypothesis → printable enclosure + an
