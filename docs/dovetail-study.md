@@ -1,6 +1,6 @@
 # VARA Dovetail Connector — Optimization Study (Phase 2)
 
-**Date:** 2026-06-03 · **Centerpiece per Build Plan Part IV.**
+**Date:** 2026-06-03 · **The project's engineering centerpiece.**
 Parametric source: `cad/connector/dovetail_lib.py` · generations: `cad/connector/genparams.py`
 · analytics: `cad/connector/analysis.py` · artifacts: `cad/connector/{out,glb}/`,
 `connector_male_v1.stl`, `connector_female_v1.stl`, `connector_assembled_v1.glb`.

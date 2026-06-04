@@ -4,7 +4,7 @@ A decision record, phase by phase: the capability probes, the dead ends, and the
 calls. The point of this file is that the *process* is auditable — not just the result. Every
 phase ended at a gate for review before the next began.
 
-Honesty rules held throughout (Build Plan §1.4): never claim a fit is "tested" (only
+Honesty rules held throughout: never claim a fit is "tested" (only
 "validated-by-design"); document dead ends, not just wins; never simulate tool output.
 
 ---

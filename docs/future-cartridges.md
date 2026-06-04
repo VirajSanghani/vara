@@ -1,6 +1,6 @@
 # Future cartridges — architecture only (NOT built)
 
-Scope discipline (Build Plan Part II): **one** hero cartridge gets finished — the vision/macro
+Scope discipline: **one** hero cartridge gets finished — the vision/macro
 lens. Every other cartridge idea lives here as *architecture only*, to prove the platform
 generalises without becoming a graveyard of half-built modules. Nothing below is modelled,
 and nothing below should be modelled unless a future phase explicitly re-opens scope.

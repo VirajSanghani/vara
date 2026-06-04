@@ -2,7 +2,7 @@
 
 **Date:** 2026-06-03
 **Purpose:** Empirically establish what each tool can actually do *before* committing
-ambition, per Build Plan §Phase 0. Every claim below is backed by a command that was
+ambition — the project's Phase 0. Every claim below is backed by a command that was
 run and its observed output. Nothing here is assumed.
 
 > **Headline:** The plan named three MCPs (FreeCAD, Blender, KiCad). Two of those are

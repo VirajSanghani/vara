@@ -21,13 +21,16 @@ connector, M2.5 screws, and the representative internals) played in `<model-view
 
 ![VARA — the full device assembling, on a loop](docs/img/assembly.gif)
 
-Held open, the same geometry is a clean teardown — every part on its own axis, in seating order:
+Held open, the same geometry is an **annotated teardown** — every part on its own axis with a
+leader label, each badged **DESIGNED** (geometry I engineered) or **REP** (a representative,
+off-the-shelf stand-in I selected and modelled to size):
 
-![VARA — exploded teardown](docs/img/exploded.jpg)
+![VARA — annotated exploded teardown](docs/img/exploded.jpg)
 
 *Both come from the real Phase-6 part models with creased-normal shading and a studio HDR
-environment — the standalone animation lives in [`web/assembly/`](web/assembly/); the fully
-interactive, labelled version (tap any part for what it does **and why**) is in [`web/`](web/).*
+environment. The standalone animation lives in [`web/assembly/`](web/assembly/); the annotated
+teardown above is a frame from the fully interactive showcase in [`web/`](web/), where you can
+drag the explode slider and tap any part for what it does **and why**.*
 
 ---
 
@@ -120,11 +123,56 @@ same reason.
 
 ---
 
+## What it can do — and where it can go
+
+VARA is a **platform**, not a single gadget. The thing that makes it one is the frozen interface
+contract: a cartridge is anything that fits the dual-rail dovetail envelope and speaks the 6-pin
+bus — `V+ (3V3 switched, ≤150 mA) · GND · I²C SDA · I²C SCL · CD# (detect) · INT`, with an
+EEPROM ID at `0x50`. Design that contract once, and every future "sense" is just a new cartridge.
+
+**What works today (the prototype loop, [`app/`](app/)).** Jog-press → the core camera captures →
+a cloud vision model identifies → a viewfinder + caption render on the 1.69″ display → it speaks.
+The core reads the cartridge's EEPROM ID on attach and can branch behaviour per cartridge. Every
+failure mode (no Wi-Fi, no API key, a timeout) degrades to a clean on-screen message, never a
+crash. This is **logic-validated with swappable stubs, not hardware-tested.**
+
+**Designed-in extensibility (the contract already supports it).** Because the connector and bus
+are frozen, these need *no change to the core* — only a new cartridge body + an I²C sensor:
+
+| New "sense" | Representative sensor | Fits because |
+|---|---|---|
+| **Thermal / IR** | MLX90640 32×24 array | low-rate I²C, brings its own optics |
+| **Air-quality / smell** | BME688 gas·VOC·T·RH·P | pure I²C, microwatts |
+| **Macro / microscope** *(the hero, built)* | swappable lens over the core eye | exercises the ±0.28 mm optical-axis budget |
+
+The honest edge case is **audio/ultrasonic**: raw streaming exceeds the low-speed 6-pin contract,
+so that cartridge would need a small on-cartridge MCU to do DSP and report over I²C. That's not a
+flaw — it's the contract telling you where its boundary is (see
+[`docs/future-cartridges.md`](docs/future-cartridges.md); none of these are modelled).
+
+**Where it could go next — concrete, unbuilt.** In rough order of "makes it real":
+
+- **Close the hardware loop** — actually print the enclosure in PA12-CF, *measure* the dovetail
+  fit and snap force against the analytical predictions, and **route + fabricate the PCB** (routing
+  was explicitly not done; the design stops at an ERC-clean schematic/netlist/BOM).
+- **Go offline / on-device** — swap the cloud vision call for a small local model on the Pi, so
+  identification works with no network; keep the cloud path as an optional "deep" mode.
+- **More senses** — any of the I²C cartridges above; a UV or polarised-light optic; a barcode/OCR
+  reader; a depth or telephoto module (CSI-bandwidth senses live in the *core*, like the camera).
+- **Smarter compute** — drop in a Pi 5 / CM4 / Jetson-class board behind the same enclosure and
+  interface for heavier on-device perception, or add a follow-up voice-Q&A loop over each result.
+- **Add a high-speed contract variant** — a superset connector for senses the 6-pin bus can't
+  carry, without breaking the low-speed cartridges that already conform.
+
+The spine still holds for all of it: this repo is **validated-by-design, not manufactured or
+hardware-tested** — the value is a contract proven to generalise and a record of how it got there.
+
+---
+
 ## Repo map
 
 ```
 vara/
-  VARA_BUILD_PLAN.md   the master plan: scope, phases, honesty rules
   BUILDLOG.md          phase-by-phase decision record (read this for the process)
   docs/                architecture · connector-spec · dovetail-study · mechanical ·
                        electronics · prototype · tool-capabilities · future-cartridges
