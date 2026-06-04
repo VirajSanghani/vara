@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>VARA — assembly</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2313130f'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23d68a2e' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23d68a2e'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
+  <style>
+    :root{ --ink:#ece8df; --mute:#9a948a; --faint:#6a655c; --amber:#d68a2e; --s3:#34322c;
+      --serif:'Fraunces',Georgia,serif; --mono:'JetBrains Mono',ui-monospace,monospace; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;color:var(--ink);font-family:var(--mono);overflow:hidden;
+      background:radial-gradient(120% 100% at 50% 36%, #26241d 0%, #16150f 54%, #0b0b09 100%)}
+    model-viewer{position:fixed;inset:0;width:100%;height:100%;--poster-color:transparent}
+    header{position:fixed;top:0;left:0;right:0;display:flex;justify-content:space-between;
+      align-items:center;padding:18px 26px;z-index:10;pointer-events:none}
+    .mark{font-family:var(--serif);font-weight:600;font-size:24px;letter-spacing:.06em}
+    .tag{font-size:11px;color:var(--mute);margin-left:12px}
+    .back{pointer-events:auto;font-size:12px;color:var(--mute);text-decoration:none;
+      border:1px solid var(--s3);padding:7px 12px;border-radius:2px;transition:.2s}
+    .back:hover{color:var(--ink);border-color:var(--amber)}
+    .panel{position:fixed;left:26px;bottom:46px;max-width:420px;z-index:10}
+    .panel h1{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.12;margin-bottom:10px}
+    .panel p{font-size:13px;line-height:1.6;color:var(--mute)}
+    .panel em{color:var(--amber);font-style:normal}
+    .ctl{position:fixed;right:26px;bottom:46px;z-index:10;display:flex;gap:6px}
+    .ctl button{font-family:var(--mono);font-size:12px;color:var(--mute);background:rgba(20,19,16,.8);
+      border:1px solid var(--s3);padding:7px 13px;border-radius:2px;cursor:pointer;backdrop-filter:blur(3px);transition:.2s}
+    .ctl button:hover{color:var(--ink);border-color:var(--amber)}
+    footer{position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:10.5px;
+      color:var(--faint);padding:9px;z-index:9;letter-spacing:.02em}
+    @media(max-width:780px){.panel{left:14px;right:14px;bottom:78px;max-width:none}.panel h1{font-size:22px}
+      header{padding:12px 14px}.tag{display:none}.ctl{right:14px;bottom:40px}}
+  </style>
+</head>
+<body>
+  <model-viewer
+    src="assembly.glb"
+    alt="VARA — full device assembling from exploded to seated"
+    autoplay animation-name=""
+    camera-controls auto-rotate auto-rotate-delay="0" rotation-per-second="14deg"
+    interaction-prompt="none"
+    shadow-intensity="1.1" shadow-softness="0.9"
+    exposure="1.05" tone-mapping="aces"
+    camera-orbit="35deg 70deg 360m" min-camera-orbit="auto auto auto" max-camera-orbit="auto auto 700m"
+    field-of-view="32deg">
+  </model-viewer>
+
+  <header>
+    <div><span class="mark">VARA</span><span class="tag">assembly — full CAD, animated</span></div>
+    <a class="back" href="../index.html">↳ interactive showcase</a>
+  </header>
+
+  <section class="panel">
+    <h1>The whole thing, coming together.</h1>
+    <p>Every part — enclosure, connector, screws, and the representative internals — flying from
+       exploded to seated, on a loop. <em>Drag to orbit; scroll to zoom.</em> Same geometry as the
+       teardown, played as one continuous assembly.</p>
+  </section>
+
+  <div class="ctl">
+    <button id="play">❚❚ pause</button>
+    <button id="reset">reset view</button>
+  </div>
+
+  <footer>First-order analytical estimates — validated-by-design, not hardware-tested. No printer or live hardware was in the loop.</footer>
+
+  <script type="module">
+    const mv = document.querySelector('model-viewer');
+    const play = document.getElementById('play');
+    play.addEventListener('click', () => {
+      if (mv.paused) { mv.play(); play.textContent = '❚❚ pause'; }
+      else { mv.pause(); play.textContent = '▶ play'; }
+    });
+    document.getElementById('reset').addEventListener('click', () =>
+      mv.cameraOrbit = '35deg 70deg 360m');
+    mv.addEventListener('load', () => mv.play());
+  </script>
+</body>
+</html>

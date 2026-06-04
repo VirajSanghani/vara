@@ -130,6 +130,10 @@ Three scenes: **Explode** (drag the slider; tap a marker for what each part does
 point-and-identify story with the real prototype frames). Drag to orbit; use the **view** presets.
 Needs internet (three.js loads from the jsdelivr CDN).
 
+There's also a **standalone auto-playing assembly animation** at **`web/assembly/`** — the full
+device flying from exploded to seated, on a loop, built as an animated glTF and played in
+`<model-viewer>` (a simpler, passive alternative to the interactive scene).
+
 ## Run the Pi app
 
 See [`app/README.md`](app/README.md) for flashing a Zero 2 W and wiring. Off-device, the logic
