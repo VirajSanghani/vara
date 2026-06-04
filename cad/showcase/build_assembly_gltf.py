@@ -17,19 +17,25 @@ MODELS = os.path.join(HERE, "..", "..", "web", "assets", "models")
 OUT = os.path.join(HERE, "..", "..", "web", "assembly")
 os.makedirs(OUT, exist_ok=True)
 
-def srgb_lin(hexcol):
+def srgb_lin(hexcol, a=1.0):
     r = ((hexcol >> 16) & 255) / 255; gg = ((hexcol >> 8) & 255) / 255; b = (hexcol & 255) / 255
     f = lambda c: round(c ** 2.2, 4)
-    return [f(r), f(gg), f(b), 1.0]
+    return [f(r), f(gg), f(b), a]
 
-# material key → (baseColor sRGB hex, metallic, roughness)
+# material key → dict(color, met, rough, [emissive hex], [emit strength], [clearcoat])
 MAT = {
-    "stone": (0x78766e, 0.05, 0.7), "amber": (0xc6822f, 0.05, 0.6),
-    "pcb": (0x1f3a2b, 0.15, 0.58), "screen": (0x0c0c10, 0.2, 0.42),
-    "black": (0x161618, 0.3, 0.5), "gold": (0xd7a23a, 0.9, 0.3),
-    "cell": (0x929698, 0.55, 0.42), "chip": (0x18181a, 0.3, 0.45),
-    "metalS": (0xc9c9cf, 1.0, 0.3), "metalA": (0x55555c, 0.9, 0.4),
-    "glass": (0x9fb6c4, 0.0, 0.12),
+    "stone":  dict(color=0x726f64, met=0.0, rough=0.62),
+    "amber":  dict(color=0xc6822f, met=0.1, rough=0.42, clear=0.6),
+    "pcb":    dict(color=0x1f4030, met=0.1, rough=0.55),
+    "screen": dict(color=0x0a0a0e, met=0.3, rough=0.32, clear=1.0),
+    "black":  dict(color=0x1a1a1d, met=0.4, rough=0.45),
+    "gold":   dict(color=0xd8a23a, met=1.0, rough=0.27),
+    "cell":   dict(color=0x9a9ea0, met=0.7, rough=0.34),
+    "chip":   dict(color=0x1a1a1e, met=0.3, rough=0.4),
+    "metalS": dict(color=0xcdced2, met=1.0, rough=0.22),
+    "metalA": dict(color=0x585860, met=0.95, rough=0.33, clear=0.3),
+    "glass":  dict(color=0x20242a, met=0.0, rough=0.05, clear=1.0),
+    "led":    dict(color=0x3a2a10, met=0.0, rough=0.5, emissive=0xff8a28, estr=3.0),  # ring-light glow
 }
 
 CASE = [(-5, -59, 1.5), (31, -59, 1.5), (-5, 17, 1.5), (31, 17, 1.5)]
@@ -45,7 +51,7 @@ PARTS = [
     ("encoder", "encoder", 0, (0, 0, 0), "black"), ("mic", "mic", 0, (0, 0, 0), "chip"),
     ("pogo", "pogo", 40, (0, 0, 0), "gold"), ("core_back", "core_back", 24, (0, 0, 0), "stone"),
     ("eeprom", "eeprom", 52, (0, 0, 0), "chip"), ("cartridge", "cartridge", 70, (0, 0, 0), "amber"),
-    ("ledring", "ledring", 86, (0, 0, 0), "pcb"), ("lensring", "lensring", 102, (0, 0, 0), "metalA"),
+    ("ledring", "ledring", 86, (0, 0, 0), "led"), ("lensring", "lensring", 102, (0, 0, 0), "metalA"),
 ]
 for i, b in enumerate(CASE): PARTS.append((f"screw{i}", "screw", 32, b, "metalS"))
 for i, b in enumerate(PIH): PARTS.append((f"piscrew{i}", "screw_pi", -54, b, "metalS"))
@@ -72,13 +78,23 @@ ARRAY, ELEM = 34962, 34963
 times = np.array([0.0, 2.6, 4.0, 6.4], dtype=np.float32)
 time_acc = add_acc(times.tobytes(), len(times), FLOAT, "SCALAR", mn=[float(times.min())], mx=[float(times.max())])
 
-# materials (dedupe by key)
+# materials (dedupe by key) — PBR + clearcoat sheen + emissive glow
+gltf.extensionsUsed = ["KHR_materials_clearcoat", "KHR_materials_emissive_strength"]
 mat_idx = {}
-for key, (hexc, met, rough) in MAT.items():
-    gltf.materials.append(g.Material(
-        pbrMetallicRoughness=g.PbrMetallicRoughness(baseColorFactor=srgb_lin(hexc), metallicFactor=met, roughnessFactor=rough),
-        name=key, doubleSided=True))
-    mat_idx[key] = len(gltf.materials) - 1
+for key, m in MAT.items():
+    mat = g.Material(
+        pbrMetallicRoughness=g.PbrMetallicRoughness(
+            baseColorFactor=srgb_lin(m["color"]), metallicFactor=m["met"], roughnessFactor=m["rough"]),
+        name=key, doubleSided=True)
+    ext = {}
+    if "clear" in m:
+        ext["KHR_materials_clearcoat"] = {"clearcoatFactor": m["clear"], "clearcoatRoughnessFactor": 0.08}
+    if "emissive" in m:
+        mat.emissiveFactor = srgb_lin(m["emissive"])[:3]
+        ext["KHR_materials_emissive_strength"] = {"emissiveStrength": m.get("estr", 1.0)}
+    if ext:
+        mat.extensions = ext
+    gltf.materials.append(mat); mat_idx[key] = len(gltf.materials) - 1
 
 geom_cache = {}
 def load_geom(fname):
