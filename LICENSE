@@ -1,0 +1,40 @@
+# VARA — Licensing
+
+VARA is a mixed software + open-hardware project and is **dual-licensed** by component, so each
+part carries the license that fits it best.
+
+| Component | Path(s) | License | File |
+|---|---|---|---|
+| **Software** | `app/`, `web/`, build/generator scripts (`*.py`, `*.js`) | **MIT** | [`LICENSE-MIT`](LICENSE-MIT) |
+| **Documentation** | `docs/`, `*.md`, `README` | **MIT** | [`LICENSE-MIT`](LICENSE-MIT) |
+| **Hardware design** | `cad/`, `electronics/` (CAD sources, STL/STEP/glTF, KiCad, netlist, BOM) | **CERN-OHL-S v2** | [`LICENSE-CERN-OHL-S-2.0.txt`](LICENSE-CERN-OHL-S-2.0.txt) |
+
+## Why dual
+
+- **MIT** keeps the software and documentation trivially reusable — anyone can read, learn from,
+  copy, adapt, or build on the code with near-zero friction. Maximum reach for the parts where
+  permissive reuse is the goal.
+- **CERN-OHL-S v2** (Strongly Reciprocal) is the hardware copyleft: anyone may study, make, and
+  modify the hardware design, but **derivatives of the hardware must be released under the same
+  license, with their complete source** (CAD, schematics, BOM). This keeps improvements to the
+  physical design open rather than absorbed into a closed product.
+
+The tradeoff, stated plainly: permissive (MIT) maximises adoption but allows closed derivatives;
+reciprocal (CERN-OHL-S) keeps derivatives open but is less convenient to combine with proprietary
+work. The split applies each where it matters — open, reusable code; open, self-perpetuating
+hardware.
+
+## SPDX
+
+```
+SPDX-License-Identifier: MIT                  (software + docs)
+SPDX-License-Identifier: CERN-OHL-S-2.0       (hardware design)
+```
+
+## Honesty note (not a legal term)
+
+These licenses cover the **design files**. They make no claim that the design has been
+manufactured or verified — it is **"validated-by-design," not hardware-tested** (see the README).
+Build at your own risk and verify before fabricating.
+
+Copyright © 2026 Viraj Sanghani and VARA contributors.
